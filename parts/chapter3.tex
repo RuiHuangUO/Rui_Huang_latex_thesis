@@ -205,7 +205,24 @@ Users are placed at random locations at the beginning of each experiment. We cho
 \noindent The query success ratio is the percentage of delivered queries among a number of attempts. Based on the timeout value in Table II, a query is delivered successfully, if it arrives at the LBSP (the destination) before the timeout; otherwise it fails. We use the query success ratio to evaluate the delivery performance of MHLPP.
 
 
-\noindent As shown in Figure 3.3-a, the success ratio in MHLPP is always higher than that in HSLPO. As the value of $k$ increases, HSLPO success ratio drops sharply while MHLPP remains stable. This is because the larger $k$ is, the harder it is for HSLPO to find enough friends in a limited time. The lack of friends has less impact on MHLPP. We observe that the success ratio of MHLPP rises when $k=7$. That is because it depends on the inner radius which is equal to the obfuscation distance of HSLPO. The obfuscation distance decreases when $k=7$, because most of the queries which complete their obfuscation phase have a short obfuscation distance. In Figure 3.3-b, both HSLPO and MSLPP values increase and have the same trend when given a larger communication radius. The reason is that the communication radius effects the free phase more than the obfuscation phase for both. As shown in Figure 3.3-c, higher privacy threshold leads to lower success ratio in two algorithms. Its impact on HSLPO is more intense than that on MHLPP, which is the most important characteristic of MHLPP. MHLPP has a better performance than HSLPO especially when there are fewer friends in the network. MHLPP can transmit messages with the help from strangers in its obfuscation phase while HSLPO cannot. 
+\noindent As shown in Figure \ref{fig:QSR:a}, the success ratio in MHLPP is always higher than that in HSLPO. As the value of $k$ increases, HSLPO success ratio drops sharply while MHLPP remains stable. This is because the larger $k$ is, the harder it is for HSLPO to find enough friends in a limited time. The lack of friends has less impact on MHLPP. We observe that the success ratio of MHLPP rises when $k=7$. That is because it depends on the inner radius which is equal to the obfuscation distance of HSLPO. The obfuscation distance decreases when $k=7$, because most of the queries which complete their obfuscation phase have a short obfuscation distance. In Figure 3.3-b, both HSLPO and MSLPP values increase and have the same trend when given a larger communication radius. The reason is that the communication radius effects the free phase more than the obfuscation phase for both. As shown in Figure 3.3-c, higher privacy threshold leads to lower success ratio in two algorithms. Its impact on HSLPO is more intense than that on MHLPP, which is the most important characteristic of MHLPP. MHLPP has a better performance than HSLPO especially when there are fewer friends in the network. MHLPP can transmit messages with the help from strangers in its obfuscation phase while HSLPO cannot. 
+
+\begin{figure}
+  \centering 
+  \subfigure[Query success ratio versus various $k$]{ 
+    \label{fig:QSR:a} %% label for first subfigure 
+    \includegraphics[width=3.0in]{figures/QSRa.png}} 
+  \hspace{1in} 
+  \subfigure[Query success ratio versus various communication radius]{ 
+    \label{fig:QSR:b} %% label for second subfigure 
+    \includegraphics[width=3.0in]{figures/QSRb.png}}
+  \hspace{1in} 
+  \subfigure[Query success ratio versus various privacy thresholds]{ 
+    \label{fig:QSR:b} %% label for second subfigure 
+    \includegraphics[width=3.0in]{figures/QSRc.png}}
+  \caption{The Query Success Ratio Comparison Between HSLPO and MHLPP} 
+  \label{fig:QSR} %% label for entire figure 
+\end{figure}
 
 \subsection{ Number of Hops}
 
