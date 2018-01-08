@@ -45,9 +45,10 @@ ${Query}_{\delta}^{{\alpha}\left({\beta}\right)}$ & A query whose original reque
 ${{Reply}}^{{\alpha}\left({\beta}\right)}$ & The reply of a query which uses ${AC}_{\alpha}^{\beta}$. \\ \hline 
 ${{Reply}}_{\gamma}^{{\alpha}\left({\beta}\right)}$ & ${Reply}^{\alpha\left(\beta\right)}$ is being forwarded by an agent $\gamma$. \\ \hline 
 ${{Agt}}_{i}^{{\alpha}\left({\beta}\right)}$ & The $i^{th}$ ($i\geq1$) agent of ${AC}_{\alpha}^{\beta}$. \\ \hline 
-${{capt}}_{\alpha}^{\beta}$ & The parameter $Capt$ in ${AC}_\alpha^\beta$. see Table 4.2 \\ \hline 
-${{aapt}}_{\gamma}^{{\alpha}\left({\beta}\right)}$ & The parameter $Aapt$ in ${AC}_{\alpha}^{\beta}$, which is given by an agent $\gamma$. see Table 4.2 \\ \hline 
+${{capt}}_{\alpha}^{\beta}$ & The parameter $Capt$ in ${AC}_\alpha^\beta$. see Table \ref{table:AptCard} \\ \hline 
+${{aapt}}_{\gamma}^{{\alpha}\left({\beta}\right)}$ & The parameter $Aapt$ in ${AC}_{\alpha}^{\beta}$, which is given by an agent $\gamma$. see Table \ref{table:AptCard} \\ \hline 
 $AN$ & Both the $Capt$ and the $Aapt$ in an AC are called the Appointment Number. \\ \hline 
+${NR}_{\varepsilon}$ & The number of \textit{ready}-ACs carried by ${U}_{\varepsilon}$ \\ \hline 
 \end{tabu}
 %\end{tabular}
 \end{table}
@@ -56,13 +57,13 @@ $AN$ & Both the $Capt$ and the $Aapt$ in an AC are called the Appointment Number
 
 \noindent Since the original requester cannot use his own identity to communicate with the LBSP, he must use others' identity (${Agt}_1$) to send queries, so that the LBSP can reply to the original requester through ${Agt}_1$. Appointment cards make it possible for the agents to forward the reply to the original requester one by one. In other words, the appointment card indicates a path through which the original requestor can get its reply. 
 
-In Figure 4.1, the users \textit{a}, \textit{b} and \textit{c} are the agents of the appointment card ${AC}^{\beta }_a$ (i.e., ${Agt}^{a\left(\beta \right)}_1$, ${Agt}^{a\left(\beta \right)}_2$and ${Agt}^{a\left(\beta \right)}_3$). These agents are strangers, so the attackers can hardly infer $c$ from the identity of $a$. At the same time, $c$ is in the original requester $d$'s social tie (i.e.,$\ c$ is $d$'s friend or his friends' friend, so on), and he is the only one who knows how to reach $d$. Therefore, it is hard for attackers to infer the identity of $d$ from the identity of $a$.
+In Figure \ref{fig:EoACPME}, the users \textit{a}, \textit{b} and \textit{c} are the agents of the appointment card ${AC}^{\beta }_a$ (i.e., ${Agt}^{a\left(\beta \right)}_1$, ${Agt}^{a\left(\beta \right)}_2$and ${Agt}^{a\left(\beta \right)}_3$). These agents are strangers, so the attackers can hardly infer $c$ from the identity of $a$. At the same time, $c$ is in the original requester $d$'s social tie (i.e.,$\ c$ is $d$'s friend or his friends' friend, so on), and he is the only one who knows how to reach $d$. Therefore, it is hard for attackers to infer the identity of $d$ from the identity of $a$.
 
 Notice that $c$ receives $a$'s appointment card (i.e. ${AC}^{\beta }_a$) from a stranger $b$ who knows the information of ${AC}^{\beta }_a$ and the identity of the next agent $c$, so that it is unsafe for $c$ to use that appointment card. In other words, the appointment card cannot be used until $c$ exchanges it with another user (e.g., the user $d$) who trusts $c$. The appointment card is called a \textit{ready appointment card} (\textit{ready}-AC) after it leaves the last agent (i.e., the user $c$), or it is called the \textit{distributing appointment card} (simply \textit{distributing}-AC). It is obvious that \textit{distributing}-ACs are transmitted among agents who can be strangers, while a user can only get \textit{ready}-ACs from  one of his friends.
 
 To make users carry a similar number of \textit{ready}-ACs, \textit{ready}-ACs are also exchanged between friends, so that a user can get \textit{ready}-ACs from his friends who have more \textit{ready}-ACs than him. As a result, the last agent is not sure whether the user who gets the \textit{ready}-AC from him is the original requester. We introduce a pseudonym mechanism, which enables the last agent to forward the reply to an unknown original requester. 
 
-All users in the network are responsible for generating their respective ACs, and they are called the creators of their own ACs. The creator records his own identity ($Cid$) and a unique number ($Capt$) on his AC. When users exchange ACs, they modify $Aid$ (the agent ID) and ${Aapt}$ (the agent's appointment number) in the AC to enable the next agent to identify who is the predecessor. Entries of AC are shown in Table 4.2.
+All users in the network are responsible for generating their respective ACs, and they are called the creators of their own ACs. The creator records his own identity ($Cid$) and a unique number ($Capt$) on his AC. When users exchange ACs, they modify $Aid$ (the agent ID) and ${Aapt}$ (the agent's appointment number) in the AC to enable the next agent to identify who is the predecessor. Entries of AC are shown in Table \ref{table:AptCard}.
 
 
 \begin{table} [hbtp]
@@ -77,7 +78,7 @@ $Cid$ & The identity of the creator who generates the AC.  \\ \hline
 $Capt$ & A unique number that distinguishes an AC from other ones generated by the same creator.   \\ \hline 
 $Aid$ & The identity of an agent who gives the AC to the recent holder. (The previous hop of the AC)  \\ \hline 
 $Aapt$ &  A unique number that distinguishes an AC from other ones transmitted by the same agent. \\ \hline 
-$Time-OUT$ & The time when the AC expires.  \\ \hline 
+$Timeout$ & The time when the AC expires.  \\ \hline 
 \textit{EQ} & A queue (Exchange Queue) which records users who exchange the AC in order. Its length is \textit{EQL}.  \\ \hline 
 \end{tabu}
 %\end{tabular}
@@ -86,7 +87,7 @@ $Time-OUT$ & The time when the AC expires.  \\ \hline
 
 \section{ AC Life Cycle}
 
-\noindent The life cycle of an AC starts when it is generated by its creator. The first $k$ (see Table 4.3) agents add their identities into its Exchange Queue (\textit{EQ}) (see Table 4.2) before exchanging it, which increases the length (\textit{EQL}) of the \textit{EQ}. When the AC's \textit{EQL} reaches $k$, it is eligible to be used in a query and is called a \textit{ready }AC. When an AC is used in a query, it is marked as an \textit{used} AC by the original requester who uses the AC. No matter what state (\textit{distributing}, \textit{ready} or \textit{used}) an AC is in, it can expire, as shown in the Figure 4.2. An AC starts at the \textit{distributing} state. If the length of its \textit{EQ} reaches \textit{k}, it is switched to the \textit{ready} state. It can timeout in all states. If an AC is used once, it is switched to the \textit{used} state. A \textit{used} AC can also be used in other queries but cannot be given to anyone. 
+\noindent The life cycle of an AC starts when it is generated by its creator. The first $k$ (see Table \ref{table:ImptACSysParam}) agents add their identities into its Exchange Queue (\textit{EQ}) (see Table \ref{table:AptCard}) before exchanging it, which increases the length (\textit{EQL}) of the \textit{EQ}. When the AC's \textit{EQL} reaches $k$, it is eligible to be used in a query and is called a \textit{ready }AC. When an AC is used in a query, it is marked as an \textit{used} AC by the original requester who uses the AC. No matter what state (\textit{distributing}, \textit{ready} or \textit{used}) an AC is in, it can expire, as shown in the Figure \ref{fig:ACLifeCycle}. An AC starts at the \textit{distributing} state. If the length of its \textit{EQ} reaches \textit{k}, it is switched to the \textit{ready} state. It can timeout in all states. If an AC is used once, it is switched to the \textit{used} state. A \textit{used} AC can also be used in other queries but cannot be given to anyone. 
 
 \begin{figure} [hbtp]
   \centering 
@@ -97,7 +98,7 @@ $Time-OUT$ & The time when the AC expires.  \\ \hline
 
 \section{ System Parameters}
 
-\noindent All the system parameters are shown in Table 4.3. 
+\noindent All the system parameters are shown in Table \ref{table:ImptACSysParam}. 
 
 \begin{table} [hbtp]
 \caption{Important System Parameters}
@@ -119,9 +120,9 @@ $\tau$ & Avoiding time \\ \hline
 
 \subsection{ Obfuscation Distance}
 
-\noindent The obfuscation distance $k$ is the number of exchange before an AC is switched to the \textit{ready} state. In other words, an AC must be exchanged $k$ times before it becomes a \textit{ready}-AC.
+\noindent The obfuscation distance $k$ is the number of exchange before an AC is switched to the \textit{ready} state. In other words, an AC must be exchanged $k$ times before it becomes a \textit{ready}-AC which can be used by a user in queries.
 
-As shown in Figure \ref{fig:ObfuscationDistance}, an AC is exchanged along ${Agt}_1$, ${Agt}_2$, ..., ${Agt}_k$. Since those agents are strangers, the only relationship between two adjacent agents is that they encounter each other somewhere. The relationship between ${Agt}_1$ and ${Agt}_k$ becomes weaker when we increase $k$. In other words, attackers can hardly infer the identity of ${Agt}_k$ when he only knows the identity of ${Agt}_1$, and his difficulty increases with the increase of parameter $k$. As a result, it is hard for attackers to infer the original requester, even though ${Agt}_k$ is in the social tie of the original requester. Since the reply message must go through a series of agents, a long obfuscation distance also lengthens the path of the reply message. Therefore, a large $k$ makes the original requester safer, while making it harder and longer for the reply to be delivered.
+As shown in Figure \ref{fig:ObfuscationDistance}, an AC is exchanged along ${Agt}_1$, ${Agt}_2$, ..., ${Agt}_k$. Since those agents are strangers, the only relationship between two adjacent agents is that they encounter each other somewhere. The relationship between ${Agt}_1$ and ${Agt}_k$ becomes weaker when we increase $k$. In other words, attackers can hardly infer the identity of ${Agt}_k$ when they only knows the identity of ${Agt}_1$, and their difficulty increases with the increase of parameter $k$. As a result, it is hard for attackers to infer the original requester, even though ${Agt}_k$ is in the social tie of the original requester. Since the reply message must go through a series of agents, a long obfuscation distance also lengthens the path of the reply message. Therefore, a large $k$ makes the original requester safer, while making it harder and longer for the reply to be delivered.
 
 \begin{figure} [hbtp]
   \centering 
@@ -132,7 +133,7 @@ As shown in Figure \ref{fig:ObfuscationDistance}, an AC is exchanged along ${Agt
 
 \subsection{ Friends Obfuscation Distance}
 
-\noindent Since ${Agt}_{k-1}$ is a stranger for ${Agt}_k$, it is possible that ${Agt}_{k-1}$ is exactly the attacker. We assume that the attacker knows that ${Agt}_k$ is in the social tie of the original requester. The attacker can assume that ${Agt}_k$ is a close friend of the original requester, so the identity of ${Agt}_k$ gives the attacker a good tip to infer the original requester. A solution to prevent the agent ${Agt}_{k-1}$ from learning the original requester easily is that the last $m$ agents are friends, as shown in Figure \ref{fig:FriObfuscationDistance}. Here, $m$ is called \textit{friends obfuscation distance}, and the last $m$ agents are trusted agents.
+\noindent Since ${Agt}_{k-1}$ is a stranger for ${Agt}_k$, it is possible that ${Agt}_{k-1}$ is exactly the attacker. We assume that the attacker knows that ${Agt}_k$ is in the social tie of the original requester. The attacker can assume that ${Agt}_k$ is a close friend of the original requester, so the identity of ${Agt}_k$ gives the attacker a good tip to infer the original requester. A solution to prevent the agent ${Agt}_{k-1}$ from learning the original requester easily is that the last $m$ ($1\leq m\leq k$) agents are friends, as shown in Figure \ref{fig:FriObfuscationDistance}. Here, $m$ is called \textit{friends obfuscation distance}, and the last $m$ agents are trusted agents.
 
 \begin{figure} [hbtp]
   \centering 
@@ -158,7 +159,7 @@ For example, we assign $Seg=2$ so that each user has two \textit{DL}s (i.e., \te
 
 \subsection{ Generating Period}
 
-\noindent Since ACs could expire, users must generate new ACs continuously. We use GP to denote the speed of generating new ACs per user, that is, each user generates a new AC every GP seconds.
+\noindent Since ACs could expire, users must generate new ACs continuously. We use $GP$ to denote the speed of generating new ACs per user, that is, each user generates a new AC every $GP$ seconds.
 
 
 \subsection{ AC Timeout}
@@ -168,7 +169,7 @@ For example, we assign $Seg=2$ so that each user has two \textit{DL}s (i.e., \te
 
 \subsection{ Avoiding Time}
 
-\noindent If a user gets an AC at time $t_i$, he cannot get that AC again before $t_i+\tau $, where $\tau$ is parameter avoiding time. The reason for this is described in Section \ref{subsec_ExchangeDisAptCrd}.
+\noindent If an agent gets an AC at time $t_i$, he cannot get that AC again before $t_i+\tau $, where $\tau$ is parameter avoiding time. The reason for this is described in Section \ref{subsec_ExchangeDisAptCrd}.
 
 
 \section{ Protocol Details}
@@ -182,16 +183,16 @@ ACs impose a burden on agents. In fact, agents are unlikely to benefit from rela
 
 We assume that the AC timeout (i.e., $AT$) is 30 minutes, and every user generates 100 ACs at the beginning and generates no AC until the 30${}^{th}$ minute. Since all agents remove the information of expired ACs from their memory, they can hardly deliver replies which use expired ACs. As a result, it is hard for a user to select an appropriate AC for his query at the 29${}^{th}$ minute when all ACs only have 1 ($=30-29$) more minute, because agents may not be able to forward the reply of his query even though the LBS receives the query successfully. Therefore, the generating strategy should be steady and sustainable.
 
-In our protocol, each user generates a new AC every GP second. Since an AC has an AT-seconds timeout, there are $\delta =\frac{AT}{GP}$ appointment cards held by each user in the network. In other words, each user maintains about $\delta$ ACs which is generated by himself, and we meet the fairness criteria. Since users create ACs continuously, ACs have various timeouts so that it is likely for a user to pick an AC which does not expire in a long time (at least longer than his queries and replies).
+In our protocol, each user generates a new AC every $GP$ second. Since an AC has an $AT$-seconds timeout, there are $\delta =\frac{AT}{GP}$ appointment cards held by each user in the network. In other words, each user maintains about $\delta$ ACs which is generated by himself, and we meet the fairness criteria. Since users create ACs continuously, ACs have various timeouts so that it is likely for a user to pick an AC which does not expire in a long time (at least longer than his queries and replies).
 
 
 \subsection{ Exchange Distributing Appointment Cards}\label{subsec_ExchangeDisAptCrd}
 
 \noindent Users exchange their \textit{distributing}-ACs as frequently as possible, so that a \textit{distributing}-AC can be switched to a \textit{ready} one quickly. Still, there are some other conditions which should be satisfied when exchanging a \textit{distributing}-AC.
 
-We assume that two users, e.g., $U_A$ and $U_B$, are walking together for some time. Also assume that $U_A$ generates an AC (e.g., ${AC}_A$) at $t_0$ and exchanges it to $U_B$, then ${AC}_A$ is given back to A and so on. The distributing phase of the AC only costs a few seconds, because $U_A$ and $U_B$ are the only agents involved. The above scene defeats the purpose of exchanging ACs because it is easy for an attacker to infer the last agent who may be $U_A$ or $U_B$ from the first agent $U_A$. 
+We assume that two users, e.g., $U_A$ and $U_B$, are walking together for some time. Also assume that $U_A$ generates an AC (e.g., ${AC}_A$) at $t_0$ and exchanges it to $U_B$, then ${AC}_A$ is given back to A and so on. The distributing phase of the AC only costs a few seconds, because $U_A$ and $U_B$ exchange ${AC}_A$ time and again, but they are the only agents involved. The above scene defeats the purpose of exchanging ACs because it is easy for an attacker to infer the last agent who may be $U_A$ or $U_B$ from the first agent $U_A$. 
 
-We use a parameter \textit{avoiding time,} $\tau$, to optimize the agent selection strategy. If a user gets an AC at time $t_i$, he cannot get that AC again before $t_i+\tau $. For example, $U_B$ receives a certain AC ${AC}_A$ from $U_A$ at $t_0$, then $U_B$ sends it to a user C ($U_C$) who can also send it to others. If a user carrying ${AC}_A$ encounters $U_B$  before $t_0+\tau $, he cannot send ${AC}_A$ to $U_B$. Therefore, if the parameter $\tau $ is larger than or equal to the parameter \textit{AT}, there is no repeated agent in an AC's \textit{EQ}. In other words, an AC never reaches an agent twice when $\tau $ is equal to \textit{AT}. In this thesis, we assign $\tau $ to \textit{AT}. 
+We use a parameter \textit{avoiding time,} $\tau$, to optimize the agent selection strategy. If a user gets an \textit{distributing}-AC at time $t_i$, he cannot get that \textit{distributing}-AC again before $t_i+\tau $. For example, $U_B$ receives a certain AC ${AC}_A$ from $U_A$ at $t_0$, then $U_B$ sends it to a user C ($U_C$) who can also send it to others. If a user carrying ${AC}_A$ encounters $U_B$  before $t_0+\tau $, he cannot send ${AC}_A$ to $U_B$. Therefore, if the parameter $\tau $ is larger than or equal to the parameter \textit{AT}, there is no repeated agent in an AC's \textit{EQ}. In other words, an AC never reaches an agent twice when $\tau $ is equal to \textit{AT}. In this thesis, we assign $\tau $ to \textit{AT}. 
 
 Besides, we should also avoid ACs having the same sequence of agents, as we mention in the distributing segment subsection. Now we propose the strategy of exchanging \textit{distributing}-ACs.
 
@@ -203,7 +204,7 @@ Let us take a pair of users Alice and Bob as an example. If Alice encounters ano
 \item  Bob was not carrying the AC in the recent $\tau $ time interval.
 \end{enumerate}
 
-When Alice sends a \textit{distributing}-AC to Bob, she adds her identity and the current time to the AC's \textit{EQ}. Besides, Alice must modify the AC's $Aid\mathrm{\ }$to her own identity and its $Aapt$ to a new one. She also records the information in Table \ref{table:RelayTableEntries} as \textit{relay table} in her memory. We should notice that the first agent (i.e., the creator) does not have a ${Aapt}_{old}$, because he is precisely the one who has generated the AC, in which case the ${Aapt}_{old}$ indicates his own identity. When Bob gets those ACs, he puts each one of the received \textit{distributing}-ACs to his \textit{DL}s respectively and randomly. If an AC whose \textit{EQL} is already equal to $k$, the AC must be switched to a \textit{ready} one when Bob gets it. Bob puts \textit{ready}-ACs on his \textit{ready}-AC list instead of \textit{distributing}-AC lists.
+When Alice sends a \textit{distributing}-AC to Bob, she adds her identity and the current time to the AC's \textit{EQ}. Besides, Alice must modify the AC's $Aid\mathrm{\ }$to her own identity and its $Aapt$ to a new one. She also records the information in Table \ref{table:RelayTableEntries} as \textit{relay-table} in her memory. We should notice that the first agent (i.e., the creator) does not have a ${Aapt}_{old}$, because he is precisely the one who has generated the AC, in which case the ${Aapt}_{old}$ indicates his own identity. When Bob gets those ACs, he puts each one of the received \textit{distributing}-ACs to his \textit{DL}s respectively and randomly. If an AC whose \textit{EQL} is already equal to $k$, the AC must be switched to a \textit{ready} one when Bob gets it. Bob puts \textit{ready}-ACs on his \textit{ready}-AC list instead of \textit{distributing}-AC lists.
 
 \begin{table} [hbtp]
 \caption{Relay Table Entries}
@@ -225,9 +226,9 @@ $AT$ & The time when the AC timeout. \\ \hline
 
 \subsection{ Exchange Ready Appointment Cards}
 
-\noindent Users ask for ready ACs only from their friends, which prevent strangers from learning the information of the users who are holding the \textit{ready}-ACs. The strategy of exchanging \textit{ready}-ACs should also meet some fairness criteria. That is, the number of each user's \textit{ready}-ACs should be more or less equal. 
+\noindent Users ask for \textit{ready}-ACs only from their friends, which prevent strangers from learning the information of the users who are holding the \textit{ready}-ACs. The strategy of exchanging \textit{ready}-ACs should also meet some fairness criteria. That is, the number of each user's \textit{ready}-ACs should be more or less equal. 
 
-Let us consider two friends Alice and Bob as an example. Alice has 20 ACs, while Bob has 10 ACs. When they encounter each other, it is reasonable that they both give half of their \textit{ready}-ACs to the other. As a result, they both will have half of the total \eqref{GrindEQ__15_} ACs. However, that strategy does not work all the time as explained below.
+Let us consider two friends Alice and Bob as an example. Alice has 20 ACs, while Bob has 10 ACs. When they encounter each other, it is reasonable that they both give half of their \textit{ready}-ACs to the other. As a result, they both will have half of the total (15) ACs. However, that strategy does not work all the time as explained below.
 
 The problem becomes more complex in the following condition. Alice is a friend of Bob, while Bob is not a friend of Alice. In other words, Bob trusts Alice, but Alice does not trust Bob. We assume that Alice is a trusted but suspicious girl so that many users trust her while she trusts few users while Bob is opposite. When users encounter Alice, they ask for \textit{ready}-ACs from her, but Alice rarely asks for \textit{ready}-ACs. Therefore, Alice carries few \textit{ready}-ACs, while Bob carries many \textit{ready}-ACs. When Alice and Bob encounter each other, it is Bob who is asking for \textit{ready}-ACs instead of Alice. To make the strategy fair and efficient, users must compare the number of their own \textit{ready}-ACs and the number of \textit{ready}-ACs carried by the other user when two users are exchanging \textit{ready}-ACs.
 
@@ -261,22 +262,22 @@ The algorithm of exchanging ACs when a user $U_i$ encounters another user $U_j$ 
 	\EndIf
 	\State Send ${AC}_u$ to $U_j$
 \EndFor
-\State Tell $U_j$ that all distributed ACs are sent.
-\State Receive all distributing ACs from $U_j$
+\State Tell $U_j$ that all \textit{distributing}-ACs are sent.
+\State Receive all \textit{distributing}-ACs from $U_j$
 \If {$U_i$ trusts $U_j$}
 	\State $U_i$ tells $U_j$ ${NR}_i$.
 \EndIf
 \If {$U_i$ is trusted by $U_j$}
 	\State Wait for $U_j$ to tell $U_i$ ${NR}_j$.
 	\If {${NR}_j\geq{NR}_i$}
-		\State send no ready AC to $U_j$
+		\State send no \textit{ready}-AC to $U_j$
 	\Else
-		\State send $\frac{{NR}_i-{NR}_j}{2}$ number of ready ACs to $U_j$
+		\State send $\frac{{NR}_i-{NR}_j}{2}$ number of \textit{ready}-ACs to $U_j$
 	\EndIf
-	\State Tell $U_j$ all ready ACs are sent.
+	\State Tell $U_j$ all \textit{ready}-ACs are sent.
 \EndIf
 \If {$U_i$ trusts $U_j$}
-	\State Wait for ready ACs from $U_j$.
+	\State Wait for \textit{ready}-ACs from $U_j$.
 \EndIf 
 \EndProcedure
 
@@ -305,7 +306,7 @@ The AC is marked as used when the query is ready to be sent so that the AC canno
 \caption{Algorithm for Sending Queries}\label{AlgSendACPQuery}
 \begin{algorithmic}[1]
 \Procedure {SendQuery } {}
-\State Choose an ready AC, say ${AC}_{\alpha,f}^{\beta}$.
+\State Choose an \textit{ready}-AC, say ${AC}_{\alpha,f}^{\beta}$.
 \State Assign the sender identity of the query to $U_{\alpha}$
 \State Assign the receiver identity to the LBS
 \State Assign the $AN$ to the ${capt}_{\alpha}^{\beta}$
@@ -334,7 +335,7 @@ In Figure \ref{fig:ConstituteReplies}, the LBS provider reply to the sender $U_a
 
 \subsection{ The First Agent}
 
-\noindent When the first agent (i.e., ${Agt}_1$) gets the reply from the LBSP, he learns the $\mathrm{AN}$ in the reply. He searches his reply table to get the information of the AC used in the query and reply. If the AC does not expire, there must be a corresponding entry in his reply table, as shown in Table \ref{table:RTEFirstAgt}. ${Agt}_1$ gets an entry where the $Aid_{old}$ and ${Aapt}_{old}$ are equal to his identity and the $AN$ of the reply. As a result, he learns the identity of the next agent (i.e. ${Agt}_2$) from the ${ID}_{nxt}$ of the entry, so ${Agt}_1$ forwards the reply to ${Agt}_2$. The $AN$ of the reply is replaced with the ${Aapt}_{new}$ in the entry by ${Agt}_1$, which enables ${Agc}_2$ to identify the AC in ${Agt}_2$'s reply table.
+\noindent When the first agent (i.e., ${Agt}_1$) gets the reply from the LBSP, he learns the $AN$ in the reply. He searches his \textit{reply-table} to get the information of the AC used in the query and reply. If the AC does not expire, there must be a corresponding entry in his \textit{reply-table}, as shown in Table \ref{table:RTEFirstAgt}. ${Agt}_1$ gets an entry where the $Aid_{old}$ and ${Aapt}_{old}$ are equal to his identity and the $AN$ of the reply. As a result, he learns the identity of the next agent (i.e., ${Agt}_2$) from the ${ID}_{nxt}$ of the entry, so ${Agt}_1$ forwards the reply to ${Agt}_2$. The $AN$ of the reply is replaced with the ${Aapt}_{new}$ in the entry by ${Agt}_1$, which enables ${Agt}_2$ to identify the AC in ${Agt}_2$'s \textit{reply-table}.
 
 \begin{table} [hbtp]
 \caption{Reply Table Entries of The First Agent}
@@ -354,7 +355,7 @@ $AT$ & The time when the AC timeout. \\ \hline
 %\end{tabular}
 \end{table}
 
-For the example in Figure \ref{fig:EoACPME}, the first agent is $U_a$. When he receives ${Reply}^{\mathrm{a}\left(\beta\right)}_{LBS}$, he learns that it is a reply from the LBS and the $Capt$ of the AC is ${capt}^{\beta}_a$. He searches his reply table for an entry whose ${Aid}_{old}$ is equal to $a$ and ${Aapt}_{old}$ is equal to ${capt}^{\beta }_a$. As shown in Figure \ref{fig:ReplyOfFirstAgent}, the ${ID}_{nxt}$ in the entry is equal to $b$ so he modifies the receiver of the reply message to $U_b$. $U_a$ also modifies the $AN$ in the reply message to ${aapt}^{a\left(\beta\right)}_a$ which enables $U_b$ identifies the AC in his reply table, because the ${Aapt}_{new}$ in the entry is equal to ${aapt}^{a\left(\beta\right)}_a$. 
+For the example in Figure \ref{fig:EoACPME}, the first agent is $U_a$. When he receives ${Reply}^{a\left(\beta\right)}_{LBS}$, he learns that it is a reply from the LBS and the $Capt$ of the AC is ${capt}^{\beta}_a$. He searches his \textit{reply-table} for an entry whose ${Aid}_{old}$ is equal to $a$ and ${Aapt}_{old}$ is equal to ${capt}^{\beta }_a$. As shown in Figure \ref{fig:ReplyOfFirstAgent}, the ${ID}_{nxt}$ in the entry is equal to $b$ so he modifies the receiver of the reply message to $U_b$. $U_a$ also modifies the $AN$ in the reply message to ${aapt}^{a\left(\beta\right)}_a$ which is exactly equal to the ${Aapt}_{new}$ in his \textit{reply-table} entry, which enables $U_b$ identifies the AC in his \textit{reply-table}. 
 
 \begin{figure} [H]
   \centering 
@@ -365,7 +366,7 @@ For the example in Figure \ref{fig:EoACPME}, the first agent is $U_a$. When he r
 
 \subsection{ Intermediate Agents}
 
-\noindent The process of forwarding replies in the intermediate agents (the second to the ${\left(k-1\right)}^{th}$ one) is similar to that of the first agent. We take the second agent as an example. When the second agent receives the reply forwarded by the first one, he learns the sender's identity (i.e., the first agent) and the $AN$ from the reply. In his reply table shown in Table \ref{table:RTESecondAgt}, there must be an entry which is related to the AC which is used in the reply (query), because he gets the AC from the previous agent. More specifically, his reply table must include an entry whose ${Aid}_{old}$ is equal to the previous agent's identity and the ${Aapt}_{old}$ is the value of $AN$ in the gotten reply.
+\noindent The process of forwarding replies in the intermediate agents (the second to the ${\left(k-1\right)}^{th}$ one) is similar to that of the first agent. We take the second agent as an example. When the second agent receives the reply forwarded by the first one, he learns the sender's identity (i.e., the first agent) and the $AN$ from the reply. In his \textit{reply-table} shown in Table \ref{table:RTESecondAgt}, there must be an entry which is related to the AC which is used in the reply (query), because he gets the AC from the previous agent. More specifically, his \textit{reply-table} must include an entry whose ${Aid}_{old}$ is equal to the previous agent's identity and the ${Aapt}_{old}$ is the value of $AN$ in the gotten reply.
 
 \begin{table} [hbtp]
 \caption{Reply Table Entries of The Second Agent}
@@ -385,7 +386,7 @@ $AT$ & The time when the AC timeout. \\ \hline
 %\end{tabular}
 \end{table}
 
-For the example in Figure \ref{fig:EoACPME}, the second agent is $U_b$. When he receives ${Reply}^{a\left(\beta\right)}_a$, he learns that it is $U_a$ who forwards the reply message ${Reply}^{a\left(\beta\right)}_a$ and the $Aapt$ of the AC is ${aapt}^{a\left(\beta\right)}_a$. He searches his reply table for an entry whose ${Aid}_{old}$ is equal to $a$ and ${Aapt}_{old}$ is equal to ${aapt}^{a\left(\beta\right)}_a$. As shown in Figure \ref{fig:ReplyOfSecondAgent}, since the ${ID}_{nxt}$ in the entry is equal to $c$, he modifies the receiver of the reply message to $U_c$. $U_b$ also modifies the $AN$ in the reply message to ${aapt}^{a\left(\beta\right)}_b$ which enables $U_c$ identifies the AC in his reply table, because the ${Aapt}_{new}$ in the entry is equal to ${aapt}^{a\left(\beta\right)}_b$. 
+For the example in Figure \ref{fig:EoACPME}, the second agent is $U_b$. When he receives ${Reply}^{a\left(\beta\right)}_a$, he learns that it is $U_a$ who forwards the reply message ${Reply}^{a\left(\beta\right)}_a$ and the $Aapt$ of the AC is ${aapt}^{a\left(\beta\right)}_a$. He searches his \textit{reply-table} for an entry whose ${Aid}_{old}$ is equal to $a$ and ${Aapt}_{old}$ is equal to ${aapt}^{a\left(\beta\right)}_a$. As shown in Figure \ref{fig:ReplyOfSecondAgent}, since the ${ID}_{nxt}$ in the entry is equal to $c$, he modifies the receiver of the reply message to $U_c$. $U_b$ also modifies the $AN$ in the reply message to ${aapt}^{a\left(\beta\right)}_b$ which enables $U_c$ identifies the AC in his \textit{reply-table}, because the ${Aapt}_{new}$ in the entry is equal to ${aapt}^{a\left(\beta\right)}_b$. 
 
 \begin{figure} [H]
   \centering 
@@ -394,11 +395,11 @@ For the example in Figure \ref{fig:EoACPME}, the second agent is $U_b$. When he 
   \label{fig:ReplyOfSecondAgent} %% label for entire figure 
 \end{figure}
 
-For each agent ${Agt}_i$, where $2\le i\le k-1$, he searches his reply table for a correlative entry, when he receives a reply. The ${Aid}_{old}$ and ${Aapt}_{old}$ in the entry should be equal to the sender's identity and the $AN$ in the reply. The identity of the next agent ${Agt}_{i+1}$ is ${ID}_{nxt}$. ${Agc}_i$ also assign ${Aapt}_{new}$ to the $AN$ in the reply to help ${Agt}_{i+1}$ search ${Agt}_{i+1}$'s reply table.
+For each agent ${Agt}_i$, where $2\le i\le k-1$, he searches his \textit{reply-table} for a correlative entry, when he receives a reply. The ${Aid}_{old}$ and ${Aapt}_{old}$ in the entry should be equal to the sender's identity and the $AN$ in the reply. The identity of the next agent ${Agt}_{i+1}$ is ${ID}_{nxt}$. ${Agt}_i$ also assign ${Aapt}_{new}$ to the $AN$ in the reply to help ${Agt}_{i+1}$ search ${Agt}_{i+1}$'s \textit{reply-table}.
 
 \subsection{ The Last Agent}
 
-\noindent The last agent also searches for a reply table entry based on the reply, while he cannot get the identity of the next agent. The reply table entry of the last agent is shown in Table \ref{table:RTELastAgt}.
+\noindent The last agent also searches for a \textit{reply-table} entry based on the reply, while he cannot get the identity of the next agent. The \textit{reply-table} entry of the last agent is shown in Table \ref{table:RTELastAgt}.
 
 \begin{table} [hbtp]
 \caption{Reply Table Entries of The Last Agent}
@@ -418,13 +419,19 @@ $AT$ & The time when the AC timeout. \\ \hline
 %\end{tabular}
 \end{table}
 
-The last agent uses the same way to look up an entry in his reply table as the previous agents. When he finds that the \textit{EQL} is equal to $k$, he notices that he is the last agent. Then he is responsible for forwarding the reply to the original requester instead of another agent. He uses his identity and ${Aapt}_{new}$ in his reply table entry to generates a pseudonym $pseudo\left({Agc}_k,{Aapt}_{new}\right)$, where the function $pseudo\left(id,Aapt\right)$ is a public pseudonym generating function which everyone in the network knows, including the original requester.
+The last agent uses the same way to look up an entry in his \textit{reply-table} as the previous agents. When he finds that the \textit{EQL} is equal to $k$, he notices that he is the last agent. Then he is responsible for forwarding the reply to the original requester instead of another agent. He uses his identity and ${Aapt}_{new}$ in his \textit{reply-table} entry to generates a pseudonym
 
-When the original requester sends his query, he also gets the same pseudonym $pseudo\left({Agc}_k,{Aapt}_{new}\right)$ using the pseudonym generating function. Note that he can get parameters from the AC. ${Agc}_k$ and ${Aapt}_{new}$ are equal to the $Aid$ and $Aapt$ in the AC. He uses that pseudonym as his identity before he gets the reply.
+\begin{equation} \label{GrindEQ__ACPPsd} 
+{psd}_{{Agt}_k}^{a\left( \beta \right)}=pseudo\left({Agt}_k,{Aapt}_{new}\right)
+\end{equation}
+
+, where the function $pseudo\left(id,Aapt\right)$ is a public pseudonym generating function which everyone in the network knows, including the original requester.
+
+When the original requester sends his query, he also gets the same pseudonym ${psd}_{{Agt}_k}^{a\left( \beta \right)}$ using the pseudonym generating function. Note that he can get parameters from the AC. ${Agt}_k$ and ${Aapt}_{new}$ are equal to the $Aid$ and $Aapt$ in the AC. He uses that pseudonym as his identity before he gets the reply.
 
 When users deliver the reply from the last agent, they are looking for a user whose identity is that pseudonym. At last, the original requester gets the reply, because he is the only user who uses the pseudonym as his identity.
 
-For the example in Figure \ref{fig:EoACPME}, the last agent is $U_c$. When he receives ${Reply}^{a\left(\beta\right)}_b$, he learns that it is $U_b$ who forwards the reply message ${Reply}^{a\left(\beta\right)}_b$ and the $Aapt$ of the AC is ${aapt}^{a\left(\beta\right)}_b$. He searches his reply table for an entry whose ${Aid}_{old}$ is equal to $b$ and ${Aapt}_{old}$ is equal to ${aapt}^{a\left(\beta\right)}_b$. Since the \textit{EQL} in the entry is equal to 3 (i.e. $k$), he recognizes that he is the last agent. $U_c$ calculates the pseudonym ${psd}^{a\left(\beta \right)}_c=pseudo\left(c,{aapt}^{a\left(\beta\right)}_c\right)$ then forward the reply to ${psd}^{a\left(\beta\right)}_c$. The original requester $d$ gets the identity $c$ and the ${aapt}^{a\left(\beta \right)}_c$ from the AC he uses, so that he uses the pseudonym ${psd}^{a\left(\beta \right)}_c$ as his identity. As a result, $U_d$ get the reply from $U_c$. The $AN$ of the reply is also assigned to ${aapt}^{a\left(\beta\right)}_c$ to avoid identical pseudonyms. The process is shown in Figure \ref{fig:ReplyOfLastAgent}. 
+For the example in Figure \ref{fig:EoACPME}, the last agent is $U_c$. When he receives ${Reply}^{a\left(\beta\right)}_b$, he learns that it is $U_b$ who forwards the reply message ${Reply}^{a\left(\beta\right)}_b$ and the $Aapt$ of the AC is ${aapt}^{a\left(\beta\right)}_b$. He searches his \textit{reply-table} for an entry whose ${Aid}_{old}$ is equal to $b$ and ${Aapt}_{old}$ is equal to ${aapt}^{a\left(\beta\right)}_b$. Since the \textit{EQL} in the entry is equal to 3 (i.e. $k$), he recognizes that he is the last agent. $U_c$ calculates the pseudonym ${psd}^{a\left(\beta \right)}_c=pseudo\left(c,{aapt}^{a\left(\beta\right)}_c\right)$ then forward the reply to ${psd}^{a\left(\beta\right)}_c$. The original requester $d$ gets the identity $c$ and the ${aapt}^{a\left(\beta \right)}_c$ from the AC he uses, so that he uses the pseudonym ${psd}^{a\left(\beta \right)}_c$ as his identity. As a result, $U_d$ get the reply from $U_c$. The $AN$ of the reply is also assigned to ${aapt}^{a\left(\beta\right)}_c$ to avoid identical pseudonyms. The process is shown in Figure \ref{fig:ReplyOfLastAgent}. 
 
 \begin{figure} [hbtp]
   \centering 
@@ -433,7 +440,7 @@ For the example in Figure \ref{fig:EoACPME}, the last agent is $U_c$. When he re
   \label{fig:ReplyOfLastAgent} %% label for entire figure 
 \end{figure}
 
-The algorithm of forwarding replies when an agent $U_i$ gets a reply message from $U_{prev}$ is shown in Algorithm \ref{AlgACPForwardReply}. $U_i$ learns the AN and the identity of the sender from the reply message ${Reply}_{U_{prev}}^{\alpha\left(\beta\right)}$. Based on this information, $U_i$ checks his reply table to find out where the reply should be forwarded to, which is ${ID}_{nxt}$. After $U_i$ updates the $AN$ of the reply message, he forwards the reply message to ${ID}_{nxt}$.
+The algorithm of forwarding replies when an agent $U_i$ gets a reply message from $U_{prev}$ is shown in Algorithm \ref{AlgACPForwardReply}. $U_i$ learns the $AN$ and the identity of the sender from the reply message ${Reply}_{U_{prev}}^{\alpha\left(\beta\right)}$. Based on this information, $U_i$ checks his \textit{reply-table} to find out where the reply should be forwarded to, which is ${ID}_{nxt}$. After $U_i$ updates the $AN$ of the reply message, he forwards the reply message to ${ID}_{nxt}$.
 
 \begin{algorithm} [hbtp]
 \caption{Algorithm For Forwarding Replies}\label{AlgACPForwardReply}
@@ -441,10 +448,10 @@ The algorithm of forwarding replies when an agent $U_i$ gets a reply message fro
 \Procedure {Received} {${Reply}_{U_{prev}}^{\alpha\left(\beta\right)}$}
 \State Get the $AN$ from ${Reply}_{U_{prev}}^{\alpha\left(\beta\right)}$
 \If {$U_{prev}$ is the LBS}
-	\State search $U_i$’s relay table to find an entry $E_i^{\alpha\left(\beta\right)}$
+	\State search $U_i$’s \textit{relay-table} to find an entry $E_i^{\alpha\left(\beta\right)}$
 	\State whose ${Aapt}_{old}=AN$ and ${Aid}_{old}=U_i$
 \Else
-	\State search $U_i$’s relay table to find an entry $E_i^{\alpha\left(\beta\right)}$
+	\State search $U_i$’s \textit{relay-table} to find an entry $E_i^{\alpha\left(\beta\right)}$
 	\State whose ${Aapt}_{old}=AN$ and ${Aid}_{old}=U_{prev}$	
 \EndIf
 \State Get the \textit{EQL}, ${Aapt}_{new}$ and ${ID}_{nxt}$ from $E_i^{\alpha\left(\beta\right)}$
@@ -461,24 +468,24 @@ The algorithm of forwarding replies when an agent $U_i$ gets a reply message fro
 
 \section{ Appointment Number}
 
-\noindent The Appointment Number (AN) including $Capt$ and $Aapt$ is significant information in the AC. We explain the rules of generating them in detail and talk about the effect of ACs' timeout mechanism in this section.
+\noindent The Appointment Number ($AN$) including $Capt$ and $Aapt$ is significant information in the AC. We explain the rules of generating them in detail and talk about the effect of ACs' timeout mechanism in this section.
 
 
 \subsection{  Creator Appointment Number}
 
-\noindent The Creator Appointment Number ($Capt$) is a number which is used to identify ACs generated by the same creator. In other words, if two ACs are generated by the same creator, and they do not expire, their $Capt$ must be different. Therefore, the first agent (i.e., the creator) cannot find two entries which have the same ${Aapt}_{old}$ in his reply table, if their ${Aid}_{old}$ are both his own identity.
+\noindent The Creator Appointment Number ($Capt$) is a number which is used to identify ACs generated by the same creator. In other words, if two ACs are generated by the same creator, and they do not expire, their $Capt$ must be different. Therefore, the first agent (i.e., the creator) cannot find two entries which have the same ${Aapt}_{old}$ in his \textit{reply-table}, if their ${Aid}_{old}$ are both his own identity.
 
 
 \subsection{ Agent Appointment Number}
 
-\noindent The Agent appointment number ($Aapt$) is a number used to identify appointment cards which have the same agent. Agents generate a new $Aapt$s for appointment cards before they exchange those cards to others. In other words, an agent gives any appointment card passing on by him a unique $Aapt$, which helps the next agent identify the appointment card in his reply table. Since the $Aapt$ is unique, an agent who is not the first one cannot find two entries which have the same pair of ${Aid}_{old}$ and ${Aapt}_{old}$, neither.
+\noindent The Agent appointment number ($Aapt$) is a number used to identify appointment cards which have the same agent. Agents generate a new $Aapt$s for appointment cards before they exchange those cards to others. In other words, an agent gives any appointment card passing on by him a unique $Aapt$, which helps the next agent identify the appointment card in his \textit{reply-table}. Since the $Aapt$ is unique, an agent who is not the first one cannot find two entries which have the same pair of ${Aid}_{old}$ and ${Aapt}_{old}$, neither.
 
 
 \subsection{ Timeout}
 
-\noindent Agents delete the entries, which contains the information of expired ACs, from his reply table. Consequently, agents cannot forward replies using ACs which expire. That is the reason why an original requester must choose an AC which expires after his query and reply timeout. However, the timeout mechanism is still necessary for the protocol.
+\noindent Agents delete the entries, which contains the information of expired ACs, from his \textit{reply-table}. Consequently, agents cannot forward replies using ACs which expire. That is the reason why an original requester must choose an AC which expires after his query and reply timeout. However, the timeout mechanism is still necessary for the protocol.
 
-Since users are moving, the distance between agents and the original requester might be too large after a long time. As a result, it is hard for agents to forward the reply messages back to the original requester so that the original requester takes a higher risk when he uses an AC which exists for a long time. Then this kind of ACs might not be used after a period, while it cost agents a few memories to save the ACs' information in their reply table. Therefore, all users remove the information of expired ACs to save their memories.
+Since users are moving, the distance between agents and the original requester might be too large after a long time. As a result, it is hard for agents to forward the reply messages back to the original requester so that the original requester takes a higher risk when he uses an AC which exists for a long time. Then this kind of ACs might not be used after a period, while it cost agents a few memories to save the ACs' information in their \textit{reply-table}. Therefore, all users remove the information of expired ACs to save their memories.
 
 We should also notice that an unexpired AC and an expired one might have the same $Capt$ or $Aapt$. Because no agent keeps the record of the expired AC, the duplication cannot confuse agents.
 

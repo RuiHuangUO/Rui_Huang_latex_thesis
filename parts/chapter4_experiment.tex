@@ -1,11 +1,11 @@
 
 \section{ Experiment}
 
-\noindent We used the map of Helsinki in our simulator to evaluate the performance of the proposed ACP. We also compare it to Binary Spray and Wait (BSW) protocol [32], distributed social based location privacy protocol (SLPD) [17] and our Multi-Hop Location-Privacy Protection (MHLPP). We simulated the continuous movement of users along streets on the map with one LBSP, fixed at a random location on the map.
+\noindent We used the map of Helsinki in our simulator to evaluate the performance of the proposed ACP. We also compare it to Binary Spray and Wait (BSW) protocol \cite{C31}, distributed social based location privacy protocol (SLPD) \cite{C16} and our Multi-Hop Location-Privacy Protection (MHLPP). We simulated the continuous movement of users along streets on the map with one LBSP, fixed at a random location on the map.
 
-For each user, we associate a random social value between 0 - 100\%, each corresponding to other users. Since each social value is assigned with equal probability, we can compute the expected number of friends of a user. If a user whose social value is larger than 85\% is called a friend and there are \textit{n} users in the network, there are $n\mathrm{?}85\%$ friends.
+For each user, we associate a random social value between 0 - 100\%, each corresponding to other users. Since each social value is assigned with equal probability, we can compute the expected number of friends of a user. If a user whose social value is larger than 85\% is called a friend and there are \textit{n} users in the network, there are $n\times \left(1-85\%\right)$ friends.
 
-The Shortest Path Map-Based Movement (SPMBM) [36] is used in our experiment. For each experiment, we give the simulator a random seed so that it can generate a pseudo-random number based on the seed. Therefore, all the factors including users' speed and locations are the same if two experiments have the same random seed. All four protocols are tested using the same set of random seeds.
+The Shortest Path Map-Based Movement (SPMBM) \cite{C35} is used in our experiment. For each experiment, we give the simulator a random seed so that it can generate a pseudo-random number based on the seed. Therefore, all the factors including users' speed and locations are the same if two experiments have the same random seed. All four protocols are tested using the same set of random seeds.
 
 Before each experiment, the simulator runs for 800 seconds (simulator time). Then we pick 100 users out of 126 users randomly, and each of them sends a query to the LBSP. Tests last for about 20 minutes (simulator time). 
 
@@ -16,7 +16,7 @@ Before each experiment, the simulator runs for 800 seconds (simulator time). The
 
 As shown in Figure \ref{fig:AverageQuerySuccessRatio10}, we compare the average query success ratio of the four protocols with 5 kinds of communication radius (10, 30, 50, 70 and 90 meters). We observe that the ACP and the BSW get a high query success ratio, while the MHLPP and the SLPD are lower than the previous two protocols. The BSW is the highest one because it is a no-privacy protocol. The ACP is just a little lower than BSW, because the query delivery process of the ACP is almost the same as that of BSW. Since users of ACP must wait for available appointment cards, they cost more time to initial their queries. However, the ACP and the BSW are at the same level, comparing to the other two protocols. The MHLPP and the SLPD need to find friends to obfuscate their queries, which baffles their delivery process.
 
-\begin{figure} [hbtp]
+\begin{figure} [H]
   \centering 
   \includegraphics[width=4.0in]{figures/F414AverageQuerySuccessRatio10minutes.png}
   \caption{Average Query Success Ratio (10 minutes)} 
@@ -25,7 +25,7 @@ As shown in Figure \ref{fig:AverageQuerySuccessRatio10}, we compare the average 
 
 The experiment results when we test 20 minutes is shown in Figure \ref{fig:AverageQuerySuccessRatio20}. Comparing to the average query success ratio at 10 minutes, the MHLPP and the SLPD achieve much higher success ratio after 20 minutes than at 10 minutes. That is because it cost them so much time in their obfuscation phases when they need to find friends. In fact, some of the queries of the MHLPP and the SLPD still do not finish their obfuscation phase at 20 minutes.
 
-\begin{figure} [hbtp]
+\begin{figure} [H]
   \centering 
   \includegraphics[width=4.0in]{figures/F415AverageQuerySuccessRatio20minutes.png}
   \caption{Average Query Success Ratio (20 minutes)} 

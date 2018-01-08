@@ -22,6 +22,11 @@
 \usepackage{amsthm}
 \usepackage{amssymb}
 \usepackage{algorithm}
+\makeatletter 
+\renewcommand\thealgorithm{\thechapter.\arabic{algorithm}} 
+\@addtoreset{algorithm}{chapter} 
+\makeatother
+
 \usepackage{multirow}
 \usepackage{capt-of}
 \usepackage[noend]{algpseudocode}
