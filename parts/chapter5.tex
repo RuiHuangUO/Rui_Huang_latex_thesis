@@ -55,24 +55,80 @@ where $\mathrm{SP}\left(V_i,R_{ia},R_{jb},V_j\right)=\mathrm{SP}\left(V_i,R_{ia}
 \noindent VRA iteratively removes ignorable vertices from the graph until only reserved vertices remain. In each iteration, we remove all ignorable vertices from the graph but keep the edges. If there is more than one route between a pair of reserved vertices, we keep the shortest one and remove others. 
 
 
-\subsubsection{ Remove Ignorable Vertices}
+\subsubsection{ Remove Ignorable Vertices}\label{subsubsec_RIV}
 
-\noindent Since the degree of ignorable vertices is no more than 2, an ignorable vertex has only 0, 1 or 2 neighbours. In the case of 0 or 1 neighbour, we simply delete the ignorable vertex; if it has two neighbours, we connect its two neighbours before it is removed, as shown in Figure 5.1. When we remove an ignorable vertex, the weight of the line which connects its two neighbours is equal to the sum of its recent two lines' weights (i.e., $W_l+W_r$). After we remove all ignorable vertices in a line-segment, the two reserved vertices at the end of the line-segment are connected with a line directly, whose weight is the sum of all the intermediate ones' (i.e., $W_1+W_2+W_3+W_4$).
+\noindent Since the degree of ignorable vertices is no more than 2, an ignorable vertex has only 0, 1 or 2 neighbours. In the case of 0 or 1 neighbour, we simply delete the ignorable vertex; if it has two neighbours, we connect its two neighbours before it is removed, as shown in Figure \ref{fig:RemoveIgnorableVertices}. When we remove an ignorable vertex, the weight of the line which connects its two neighbours is equal to the sum of its recent two lines' weights (i.e., $W_l+W_r$). After we remove all ignorable vertices in a line-segment, the two reserved vertices at the end of the line-segment are connected with a line directly, whose weight is the sum of all the intermediate ones' (i.e., $W_1+W_2+W_3+W_4$).
 
+\begin{figure} [hbtp]
+  \centering 
+  \includegraphics[height=1.2in]{figures/F51RemoveIgnorableVertices.png}
+  \caption{Remove Ignorable Vertices} 
+  \label{fig:RemoveIgnorableVertices} %% label for entire figure 
+\end{figure}
 
-\subsubsection{ Remove Redundant Connections}
+\subsubsection{ Remove Redundant Connections}\label{subsubsec_RRC}
 
-\noindent After we remove all ignorable vertices, all the reserved vertices are connected directly. However, it is possible that there are several connections between a pair of reserved vertices. Since the shortest route between a pair of neighbouring vertices makes other longer ones redundant, we remove all routes except the shortest one, as shown in Figure 5.2. We assume that $W_2$ is the shortest line among three connections, when $W_1$ and $W_3$ are removed.
+\noindent After we remove all ignorable vertices, all the reserved vertices are connected directly. However, it is possible that there are several connections between a pair of reserved vertices. Since the shortest route between a pair of neighbouring vertices makes other longer ones redundant, we remove all routes except the shortest one, as shown in Figure \ref{fig:F52TidyReservedConnections}. We assume that $W_2$ is the shortest line among three connections, when $W_1$ and $W_3$ are removed.
 
+\begin{figure} [hbtp]
+  \centering 
+  \includegraphics[height=1.2in]{figures/F52TidyReservedConnections.png}
+  \caption{Tidy Reserved Connections} 
+  \label{fig:F52TidyReservedConnections} %% label for entire figure 
+\end{figure}
 
 \subsubsection{ Iterations}
 
-The process is shown in Algorithm 5-1. The input of the algorithm is the original entire map, which is called ${Graph}_0$. In the \textit{i}${}^{th}$ iteration, VRA makes a copy of ${Graph}_i$ as ${Graph}_{i+1}$. If $i>0$, the ${Graph}_i$ is the output of the previous (i.e., ${\left(i-1\right)}^{th}$) iteration. VRA removes all ignorable vertices in the ${Graph}_{i+1}$ as described in Section 5.1.2.1 and remove all unnecessary routes between reserved vertices as described in Section 5.1.2.2. In other words, ${Graph}_i$ gets smaller and smaller as \textit{i} increases, because we always remove ignorable vertices from them. If ${Graph}_i$ is equal to ${Graph}_{i+1}$, which means that the \textit{i}${}^{th}$ iteration makes no modification on the graph, the algorithm ends.
+The process is shown in Algorithm \ref{AlgVerRed}. The input of the algorithm is the original entire map, which is called ${Graph}_0$. In the \textit{i}${}^{th}$ iteration, VRA makes a copy of ${Graph}_i$ as ${Graph}_{i+1}$. If $i>0$, the ${Graph}_i$ is the output of the previous (i.e., ${\left(i-1\right)}^{th}$) iteration. VRA removes all ignorable vertices in the ${Graph}_{i+1}$ as described in Section \ref{subsubsec_RIV} and remove all unnecessary routes between reserved vertices as described in Section \ref{subsubsec_RRC}. In other words, ${Graph}_i$ gets smaller and smaller as \textit{i} increases, because we always remove ignorable vertices from them. If ${Graph}_i$ is equal to ${Graph}_{i+1}$, which means that the \textit{i}${}^{th}$ iteration makes no modification on the graph, the algorithm ends.
 
+\begin{algorithm} [hbtp]
+\caption{Algorithm For Vertex Reduction}\label{AlgVerRed}
+\begin{algorithmic}[1]
+\Procedure {reduce} {${Graph}_i$}
+\State Copy ${Graph}_i$ to ${Graph}_{i+1}$
+\For {every ignorable vertex $G_u$ in ${Graph}_{i+1}$}
+	\State $remove(G_u)$
+\EndFor
+\For {every pair of reserved vertices}
+	\State remove redundant connections
+\EndFor
+\EndProcedure
+\Procedure {VRA} {${Graph}_0$}
+\State $i=0$
+\While {$i=0$ or there are any differences between ${Graph}_{i-1}$ and ${Graph}_i$}
+	\State $reduce({Graph}_i)$
+	\State $i=i+1$
+\EndWhile
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
 
 \subsection{ Assembling Vertices}
 
-\noindent - $\left(\right)$                                       $\left(\right)$      - $\left(\right)$                                       $\left(\right)$      We assume that the vertex reduction process stops at the \textit{i}${}^{th}$ iteration. Then, the ${Graph}_i$ is the input of an all-pairs shortest path algorithm. Let $SP_i\left(R_u,R_v\right)$ denote the shortest path from $R_u$ to $R_v$ in $Graph_i$. We can infer the all-pairs shortest path of ${\mathrm{Grap}h}_{i-1}$ based on ${\mathrm{Grap}h}_i$ with Lemma 1 and Lemma 2. The algorithm ends when we get the result of ${Graph}_0$. The algorithm is shown in Algorithm 5-2.
+\noindent - $\left(\right)$                                       $\left(\right)$      - $\left(\right)$                                       $\left(\right)$      We assume that the vertex reduction process stops at the \textit{i}${}^{th}$ iteration. Then, the ${Graph}_i$ is the input of an all-pairs shortest path algorithm. Let $SP_i\left(R_u,R_v\right)$ denote the shortest path from $R_u$ to $R_v$ in $Graph_i$. We can infer the all-pairs shortest path of ${\mathrm{Grap}h}_{i-1}$ based on ${\mathrm{Grap}h}_i$ with Lemma 1 and Lemma 2. The algorithm ends when we get the result of ${Graph}_0$. The algorithm is shown in Algorithm \ref{AlgAssIgnVer}.
+
+\begin{algorithm} [hbtp]
+\caption{Algorithm for Assembling Ignorable Vertices}\label{AlgAssIgnVer}
+\begin{algorithmic}[1]
+\Procedure {assemble} {${Graph}_i$}
+\For {all ignorable vertices ($G_u$) in ${Graph}_i$}
+	\For {all other vertices ($G_v$) in ${Graph}_i$}
+		\If {$G_u$ and $G_v$ are in the same line-segment}
+			\State Use Lemma 1 to calculate their shortest path.
+		\Else
+			\State Use Lemma 2 to calculate their shortest path.
+		\EndIf
+	\EndFor
+\EndFor
+\EndProcedure
+\Procedure {AssembleAll} {$i$}
+\While {$i>0$}
+	\State $assemble\left({Graph}_{i-1}\right)$
+	\State $i=i-1$
+\EndWhile
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
 
 \noindent We start from the ${Graph}_{i-1}$ and assemble all intermediate graphs, until we get the result of ${Graph}_0$. For any intermediate ${Graph}_j$, we already have the all-pairs shortest path result of its reserved vertices in the previous iteration (i.e. ${Graph}_{j+1}$). Then, we calculate the shortest path from any ignorable vertex to all others. When the two vertices are in the same line-segment, we use Lemma 1 to calculate their shortest path. The Lemma 1 includes four parts: $SPI\left(V_i,V_j\right)$, $SPI\left(R_1,V_i\right)$, $SPI\left(V_j,R_2\right)$ and $SP\left(R_1,R_2\right)$. Since we already have the result of $SP\left(R_1,R_2\right)$ in the previous iteration, we just need to calculate the remaining three $SPI$ parts, which is easy and has fewer nodes. If the two vertices are in different line-segments, we use Lemma 2 to calculate the shortest path. We already have all the $SP$ parts from the previous iteration, so we just need to deal with their respective $SPI$ parts.
 
@@ -88,7 +144,14 @@ The process is shown in Algorithm 5-1. The input of the algorithm is the origina
 
 \subsection{ Static Nodes}
 
-\noindent If nodes on the map are stationary, the radius threshold $r$ is the only factor of the selection of the grid size ($l\mathrm{?}l$). The length $l$ of the side of a grid should be equal to $r$, as shown in Figure 5.3. For any node $v$ in the dark grid, all nodes whose distance between them is equal to or shorter than $r$ should be in the grey or dark grid. Therefore, if we want to get all connected nodes to node $v$, we simply need to traverse all nodes in the grey and dark grids instead of all nodes in the entire map. In this case, the expected number of nodes which we need to traverse is $\frac{9n\mathrm{?}r^2}{h\mathrm{?}w}$ for checking connections for a node $v$. If we calculate connections for all nodes, we simply need to get the distances of about $\frac{9n^2\mathrm{?}r^2}{2\mathrm{?}h\mathrm{?}w}$ pairs of nodes, instead of $\frac{n^2}{2}$ pairs.
+\noindent If nodes on the map are stationary, the radius threshold $r$ is the only factor of the selection of the grid size ($l\mathrm{?}l$). The length $l$ of the side of a grid should be equal to $r$, as shown in Figure \ref{fig:F53GridSizeForStillNodes}. For any node $v$ in the dark grid, all nodes whose distance between them is equal to or shorter than $r$ should be in the grey or dark grid. Therefore, if we want to get all connected nodes to node $v$, we simply need to traverse all nodes in the grey and dark grids instead of all nodes in the entire map. In this case, the expected number of nodes which we need to traverse is $\frac{9n\mathrm{?}r^2}{h\mathrm{?}w}$ for checking connections for a node $v$. If we calculate connections for all nodes, we simply need to get the distances of about $\frac{9n^2\mathrm{?}r^2}{2\mathrm{?}h\mathrm{?}w}$ pairs of nodes, instead of $\frac{n^2}{2}$ pairs.
+
+\begin{figure} [hbtp]
+  \centering 
+  \includegraphics[height=2in]{figures/F53GridSizeForStillNodes.png}
+  \caption{Grid Size For Still Nodes} 
+  \label{fig:F53GridSizeForStillNodes} %% label for entire figure 
+\end{figure}
 
 
 \subsection{ Mobile Nodes}
@@ -97,8 +160,14 @@ The process is shown in Algorithm 5-1. The input of the algorithm is the origina
 
 \noindent Suppose that we have two nodes $u$ and $v$, and their distance is $d_1$ at $t_1$. Since the maximum speed of nodes is $S$, their distance $d_0$ at $t_0$ satisfies
 \[max\left\{0,d_1-2\delta \right\}\le d_0\le d_1+2\delta \] 
-where $\delta =S\left|t_1-t_0\right|$. When $d_1\le r$, these two nodes are connected at $t_1$, then $d_0$ must satisfy $0\le d_0\le r+2\delta $. If they are in the same or adjacent grids at $t_0$, as shown in Figure 5.4. We have $l=r+2\delta $, so that $\mathrm{\forall }d_0\in \left[0,r+2\delta \right]$: $d_0\le l$. In other words, there is no grid between two nodes at $t_0$. 
+where $\delta =S\left|t_1-t_0\right|$. When $d_1\le r$, these two nodes are connected at $t_1$, then $d_0$ must satisfy $0\le d_0\le r+2\delta $. If they are in the same or adjacent grids at $t_0$, as shown in Figure \ref{fig:F54LengthofGrid}. We have $l=r+2\delta $, so that $\mathrm{\forall }d_0\in \left[0,r+2\delta \right]$: $d_0\le l$. In other words, there is no grid between two nodes at $t_0$. 
 
+\begin{figure} [hbtp]
+  \centering 
+  \includegraphics[height=2in]{figures/F54LengthofGrid.png}
+  \caption{Length of Grid} 
+  \label{fig:F54LengthofGrid} %% label for entire figure 
+\end{figure}
 
 \subsection{Complexity}
 
