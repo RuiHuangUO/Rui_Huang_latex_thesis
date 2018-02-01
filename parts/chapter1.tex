@@ -5,7 +5,7 @@
 \noindent Location-privacy is becoming a major concern in the Opportunistic Mobile Social Network (OMSN) which is a kind of a Delay Tolerant Network (DTN) \cite {C1} featuring lack of continuous connectivity. More specifically, in OMSNs, it is not necessary for senders to have an end-to-end routing path to their destinations. Users make contact when they encounter each other. LBSs are common applications in OMSNs and they are widely used in ``military and government industries, emergency services and the commercial sector'' \cite {C4}, especially after the proliferation of localization technologies, like GPS. Many people access LBSs with their portable devices and send their location to LBS providers. In this case, LBS users face a continuous risk that their location may be leaked from the LBS applications. That makes people unwilling to use LBSs. Thus, protecting location privacy has been a critical issue in LBSs.
 
 
-\subsection{ Motivation and Objective}
+\section{ Motivation and Objective}
 
 \noindent LBSs which use the location information of users can be considered as ``two types of application design: push and pull services'' \cite {C4}. For example, you may receive an advertisement when you enter an area, which is a push service; if you look for the nearest restaurant, you must pull information from the network. It is obvious that you must reveal your location if you use LBS. When you use a LBS application to find the nearest restaurant, you actually tell the LBS provider your location and your next destination which might have a restaurant nearby. If attackers can access the LBS provider's database, they can learn that information. Then you may receive a lot of advertisements from surrounding restaurants.
 
@@ -14,12 +14,12 @@ Such inference attack, in addition to bothering you with advertisements, can bec
 The OMSN is defined ``as decentralized opportunistic communication networks formed among human carried mobile devices that take advantage of mobility and social networks to create new opportunities for exchanging information and mobile ad hoc social networking'' \cite {C2}. In other words, OMSN is a kind of mobile ad hoc network, and the information and technology of social network are also used in it. People carrying smartphones which contain WiFi or Bluetooth can form a typical OMSN. Since the WiFi, Bluetooth on smartphones can be used for discovering other devices and direct communication between devices, users can communicate with others who are within their communication range without using any infrastructure, which is the basic requirement of an OMSN. Since users in OMSN could also use LBS applications, their location-privacy must be protected. Besides, the information in the social network allows users to identify friends. Therefore, it is necessary to have location-privacy protection protocol using the social networks.
 
 
-\subsection{ Objectives}
+\section{ Objectives}
 
 \noindent Disconnection, decentralization and highly delays are obvious features for OMSN so that a decentralized strategy may benefit for the location-privacy protection protocol in OMSN. Besides, decreasing interactions between users and servers can significantly cut down the time cost. To prevent the attackers from learning users' private information, the protocol should obfuscate users' location and hide their identities.
 
 
-\subsection{ Contribution}
+\section{ Contribution}
 
 \noindent We propose two new decentralized location-privacy protecting protocols for OMSN so that they do not need a three-party server which is used to obfuscate queries for users. We also create a new simulator for OMSNs called OMSN Routing protocols Simulator (ORS) to evaluate our protocols.
 
@@ -30,7 +30,7 @@ Our second protocol is also a distributed location-privacy algorithm called Appo
 Our new simulator ORS is inspired by a well-known simulator, ONE \cite {C35}, which is used by many researchers to test their models and protocols in DTN. The major reason why we created a new simulator is that the ONE is not designed for OMSN and lacks social networking concepts for it to be effective in OMSN. Adding social network information into the ONE simulator must modify its basic structure, which is problematic and might not ensure correctness of our experiments. We used more efficient algorithms to make our simulator run two times faster than ONE.
 
 
-\subsection{ Thesis Organization}
+\section{ Thesis Organization}
 
 \noindent This thesis is organized as follows:
 

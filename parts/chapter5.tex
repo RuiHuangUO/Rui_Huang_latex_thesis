@@ -39,9 +39,9 @@ A reserved vertex can belong to different line-segments, while an ignorable vert
 
 \textit{Definition} \textit{4}: The shortest route between two vertices inside a \textit{segment-line} is called the \textit{inner shortest path} ($SPI$). 
 
-Let ${SPI}\left(V_i,V_j\right)$ denote the inner shortest path between two vertices (i.e. $V_i,V_j$) inside a \textit{segment-line}.
+Let ${SPI}\left(V_i,V_j\right)$ denote the inner shortest path between two vertices (i.e., $V_i,V_j$) inside a \textit{segment-line}.
 
-\textit{Lemma} \textit{1}: If two vertices (i.e. $V_i$, $V_j$; $i<j$) are in the same line-segment, the shortest path between them is
+\textit{Lemma} \textit{1}: If two vertices (i.e., $V_i$, $V_j$; $i<j$) are in the same line-segment, the shortest path between them is
 
 \begin{equation} \label{GrindEQ__VRShortestInner} 
 {SP}\left(V_i,V_j\right)={min}\left\{SPI\left(V_i,V_j\right),SPI\left(R_1,V_i\right)+SPI\left(V_j,R_2\right)+SP\left(R_1,R_2\right)\right\}
@@ -60,7 +60,7 @@ Case 1: $V_x$ is between $V_i$ and $V_j$. The length of the path $V_i-V_x-V_j$ m
 
 Case 2: $V_x$ is between $R_1$ and $V_i$ or between $V_j$ and $R_2$. $V_i-V_j$ should not be a part of the path or $V_i-V_j$ could be the shortest path. Then the path $V_i-R_1-R_2-V_j$ must be a part of $V_i-V_x-V_j$ because $R_1$ and $R_2$ are entrances of the \textit{segment-line}.
 
-Since an all-pairs SPI has a complexity equal to or smaller than $O\left(n\right)$ and the \textit{n} here is much fewer than the number of points on the entire map, the time-cost for SPI is ignorable comparing to the time-cost of the entire map all-pairs shortest path calculation.
+Since an all-pairs \textit{SPI} has a complexity of $O\left(n\right)$ and the \textit{n} here is much smaller than the number of points on the entire map, the time-cost for SPI is ignorable comparing to the time-cost of the entire map all-pairs shortest path calculation.
 
 \textit{Lemma 2}: We assume that there are two different line-segments 
 
@@ -73,14 +73,14 @@ SP\left(V_i,R_{i1},R_{j2},V_j\right),SP\left(V_i,R_{i2},R_{j2},V_j\right)\}
 \end{split}
 \end{equation}
 
-where $\mathrm{SP}\left(V_i,R_{ia},R_{jb},V_j\right)=\mathrm{SP}\left(V_i,R_{ia}\right)+\mathrm{SP}\left(R_{ia},R_{jb}\right)+\mathrm{SP}\left(R_{jb},V_j\right)$. Here $V_i$ and $R_{ia}$ are in the same line-segment, so we can use Lemma 1 to calculate $\mathrm{SP}\left(V_i,R_{ia}\right)$, so does $\mathrm{SP}\left(R_{jb},V_j\right)$. The $SP\left(R_{ia},R_{jb}\right)$ is the only part we need to calculate using all-pair shortest path algorithms. We should notice that $R_{ia}$ and $R_{jb}$ could be the same vertex, but it does not make any difference to the lemma.
+where ${SP}\left(V_i,R_{ia},R_{jb},V_j\right)={SP}\left(V_i,R_{ia}\right)+{SP}\left(R_{ia},R_{jb}\right)+{SP}\left(R_{jb},V_j\right)$. Here $V_i$ and $R_{ia}$ are in the same line-segment, so we can use Lemma 1 to calculate ${SP}\left(V_i,R_{ia}\right)$, so does ${SP}\left(R_{jb},V_j\right)$. The $SP\left(R_{ia},R_{jb}\right)$ is the only part we need to calculate using all-pair shortest path algorithms. We should notice that $R_{ia}$ and $R_{jb}$ could be the same vertex, but it does not make any difference to the lemma.
 
 \textit{Proof}: Since $V_i$ and $V_j$ are not in the same \textit{segment-line}, there must be one or more reserved vertices on their shortest path. On $V_i$'s side, one of $R_{i1}$ and $R_{i2}$ must be on the shortest path. One of $R_{j1}$ and $R_{j2}$ should be on that shortest path, either. We assume that $R_{iu}$ and $R_{jv}$ are on the shortest path between $V_i$ and $V_j$, then a shortest path between $R_{iu}$ and $R_{jv}$ should be a part of that path.
 
 
 \subsection{ Vertex Reduction}\label{subsecVR}
 
-\noindent VRA iteratively removes ignorable vertices from the graph until only reserved vertices remain. In each iteration, we remove all ignorable vertices from the graph but keep the edges. If there is more than one route between a pair of reserved vertices, we keep the shortest one and remove others. 
+\noindent VRA iteratively removes ignorable vertices from the graph until only reserved vertices remain. In each iteration, we remove all ignorable vertices from the graph but keep the edges. If there are different routes between a pair of reserved vertices, we keep the shortest one and remove others. 
 
 
 \subsubsection{ Remove Ignorable Vertices}\label{subsubsec_RIV}
@@ -123,7 +123,7 @@ The process is shown in Algorithm \ref{AlgVerRed}. The input of the algorithm is
 \EndProcedure
 \Procedure {VRA} {${Graph}_0$}
 \State $i=0$
-\While {$i=0$ or there are any differences between ${Graph}_{i-1}$ and ${Graph}_i$}
+\While {$i=0$ or there is any difference between ${Graph}_{i-1}$ and ${Graph}_i$}
 	\State $reduce({Graph}_i)$
 	\State $i=i+1$
 \EndWhile
@@ -158,12 +158,12 @@ The process is shown in Algorithm \ref{AlgVerRed}. The input of the algorithm is
 \end{algorithmic}
 \end{algorithm}
 
-\noindent We start from the ${Graph}_{i-1}$ and assemble all intermediate graphs, until we get the result of ${Graph}_0$. For any intermediate ${Graph}_j$, we already have the all-pairs shortest path result of its reserved vertices in the previous iteration (i.e. ${Graph}_{j+1}$). Then, we calculate the shortest path from any ignorable vertex to all others. When the two vertices are in the same line-segment, we use Lemma 1 to calculate their shortest path. The Lemma 1 includes four parts: $SPI\left(V_i,V_j\right)$, $SPI\left(R_1,V_i\right)$, $SPI\left(V_j,R_2\right)$ and $SP\left(R_1,R_2\right)$. Since we already have the result of $SP\left(R_1,R_2\right)$ in the previous iteration, we just need to calculate the remaining three $SPI$ parts, which is easy and has fewer nodes. If the two vertices are in different line-segments, we use Lemma 2 to calculate the shortest path. We already have all the $SP$ parts from the previous iteration, so we just need to deal with their respective $SPI$ parts.
+\noindent We start from the ${Graph}_{i-1}$ and assemble all intermediate graphs, until we get the result of ${Graph}_0$. For any intermediate ${Graph}_j$, we already have the all-pairs shortest path result of its reserved vertices in the previous iteration (i.e., ${Graph}_{j+1}$). Then, we calculate the shortest path from any ignorable vertex to all others. When the two vertices are in the same line-segment, we use Lemma 1 to calculate their shortest path. The Lemma 1 includes four parts: $SPI\left(V_i,V_j\right)$, $SPI\left(R_1,V_i\right)$, $SPI\left(V_j,R_2\right)$ and $SP\left(R_1,R_2\right)$. Since we already have the result of $SP\left(R_1,R_2\right)$ in the previous iteration, we just need to calculate the remaining three $SPI$ parts, which is easy and has fewer nodes. If the two vertices are in different line-segments, we use Lemma 2 to calculate the shortest path. We already have all the $SP$ parts from the previous iteration, so we just need to deal with their respective $SPI$ parts.
 
 
 \section{ Finding Nodes in a Range}
 
-\noindent We assume that there are $n$ nodes in a planar map (size: $h\times w$). Those nodes keep moving on the map slower than a speed threshold ($S$). If the distance between two nodes $a$ and $b$ is smaller than a radius threshold ($r$), they are considered connected. We want to calculate all-pairs connections for all nodes on the map periodically. 
+\noindent We assume that there are $n$ nodes in a planar map (size: $h\times w$). Those nodes keep moving on the map slower than a speed threshold ($S$). If the distance between two nodes $a$ and $b$ is smaller than $r$, they are considered connected. We want to calculate all-pairs connections for all nodes on the map periodically. 
 
 If we calculate these connections directly, the complexity is $\mathrm{O}\left(\frac{n^2}{2}\right)$. We assume that $r\ll min\left\{h,w\right\}$, and nodes are distributed on the entire map symmetrically. Then, the expected number of nodes which has a connection with a node ($v$) is $\frac{n}{h\times w}\times\pi r^2\ll n$. If we traverse all other ($n-1$) nodes of $v$, it will be a waste of time.
 
@@ -172,7 +172,7 @@ We propose an algorithm to optimize the calculation of all-pairs connections. We
 
 \subsection{ Static Nodes}
 
-\noindent If nodes on the map are stationary, the radius threshold $r$ is the only factor of the selection of the grid size ($l\times l$). The length $l$ of the side of a grid should be equal to $r$, as shown in Figure \ref{fig:F53GridSizeForStillNodes}. For any node $v$ in the dark grid, all nodes whose distance between them is equal to or shorter than $r$ should be in the grey or dark grid. Therefore, if we want to get all connected nodes to node $v$, we simply need to traverse all nodes in the grey and dark grids instead of all nodes in the entire map. In this case, the expected number of nodes which we need to traverse is $\frac{9n\times r^2}{h\times w}$ for checking connections for a node $v$. If we calculate connections for all nodes, we simply need to get the distances of about $\frac{9n^2\times r^2}{2\times h\times w}$ pairs of nodes, instead of $\frac{n^2}{2}$ pairs.
+\noindent If nodes on the map are stationary, the $r$ is the only factor of the selection of the grid size ($l\times l$). The length $l$ of the side of a grid should be equal to $r$, as shown in Figure \ref{fig:F53GridSizeForStillNodes}. For any node $v$ in the dark grid, all nodes whose distance between them is equal to or shorter than $r$ should be in the grey or dark grid. Therefore, if we want to get all connected nodes to node $v$, we simply need to traverse all nodes in the grey and dark grids instead of all nodes in the entire map. In this case, the expected number of nodes which we need to traverse is $\frac{9n\times r^2}{h\times w}$ for checking connections for a node $v$. If we calculate connections for all nodes, we simply need to get the distances of about $\frac{9n^2\times r^2}{2\times h\times w}$ pairs of nodes, instead of $\frac{n^2}{2}$ pairs.
 
 \begin{figure} [hbtp]
   \centering 
@@ -184,11 +184,11 @@ We propose an algorithm to optimize the calculation of all-pairs connections. We
 
 \subsection{ Mobile Nodes}
 
-\noindent The problem is a bit more complicated if nodes are moving. Assuming that we want to calculate all-pairs connections at $t_1$, first, we draw grids at time $t_0$, so that we know which grid is a node in at $t_0$. Instead of $t_0$, we want to get connections at $t_1$. In this case, the length $l$ might not equal to the radius threshold $r$.
+\noindent The problem is a bit more complicated if nodes are moving. Assuming that we want to calculate all-pairs connections at $t_1$, first, we draw grids at time $t_0$, so that we know which grid is a node in at $t_0$. Instead of $t_0$, we want to get connections at $t_1$. In this case, the length $l$ should be larger than $r$.
 
 Suppose that we have two nodes $u$ and $v$, and their distance is $d_1$ at $t_1$. Since the maximum speed of nodes is $S$, their distance $d_0$ at $t_0$ satisfies
 \[max\left\{0,d_1-2\delta \right\}\le d_0\le d_1+2\delta \] 
-where $\delta =S\left|t_1-t_0\right|$. When $d_1\le r$, these two nodes are connected at $t_1$, then $d_0$ must satisfy $0\le d_0\le r+2\delta $. If they are in the same or adjacent grids at $t_0$, as shown in Figure \ref{fig:F54LengthofGrid}. We have $l=r+2\delta $, so that $\mathrm{\forall }d_0\in \left[0,r+2\delta \right]$: $d_0\le l$. In other words, there is no grid between two nodes at $t_0$. 
+where $\delta =S\left|t_1-t_0\right|$. When $d_1\le r$, these two nodes are connected at $t_1$, then $d_0$ must satisfy $0\le d_0\le r+2\delta $. As shown in Figure \ref{fig:F54LengthofGrid}, If we draw grids on the map in an attempt to place the two nodes in the same or adjacent grids at $t_0$, the length of each grid $l=r+2\delta $.
 
 \begin{figure} [hbtp]
   \centering 
@@ -199,7 +199,7 @@ where $\delta =S\left|t_1-t_0\right|$. When $d_1\le r$, these two nodes are conn
 
 \subsection{Complexity}
 
-\noindent The complexity of drawing grids is $O\left(\frac{9n^2\times l^2}{2\times h\times w}\right)$, while that of checking connections is $\mathrm{O}\left(\frac{9n^2\mathrm{?}l^2}{2\mathrm{?}h\mathrm{?}w}\right)$, so the checking part is much more expensive than the drawing part. Since $l=r+2\delta =r+2S\left|t_1-t_0\right|$, the checking part achieves its best performance when $t_1-t_0=0$, then its complexity is $O\left(\frac{9n^2\times r^2}{2\times h\times w}\right)$. That is equal to the complexity when nodes are stationary.
+\noindent The complexity of drawing grids is $\mathrm{O}\left(n\right)$, while that of checking connections is $\mathrm{O}\left(\frac{9n^2\times l^2}{2\times h\times w}\right)$, so the checking part is much more expensive than the drawing part. Since $l=r+2\delta =r+2S\left|t_1-t_0\right|$, the checking part achieves its best performance when $t_1-t_0=0$, then its complexity is $O\left(\frac{9n^2\times r^2}{2\times h\times w}\right)$. That is equal to the complexity when nodes are stationary.
 
 
 

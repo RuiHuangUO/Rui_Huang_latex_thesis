@@ -14,11 +14,11 @@ Before each experiment, the simulator runs for 800 seconds, and then we pick 100
 
 \noindent The query success ratio is the percentage of delivered queries among some attempts. Since users sending 100 queries in each experiment, if $s$ queries are delivered to the LBSP at time $t$, the query success ratio of time $t$ is $s\%$.
 
-As shown in Figure \ref{fig:AverageQuerySuccessRatio10}, we compare the average query success ratio of the four protocols for 5 different communication ranges (10, 30, 50, 70 and 90 meters) at 10 minutes mark. We observe that our ACP and BSW achieve high query success ratio, while the query success ratio in case of MHLPP and SLPD are lower than the other two. BSW has the highest query success ratio because it is a no-privacy protocol. The ACP has slightly lower query success ratio than BSW, because the query delivery process of the ACP is almost the same as that of BSW. Since users of ACP must wait for available appointment cards, it requires more time to initiate their queries. However, ACP and BSW exibit similar performance compared to the other two protocols. MHLPP and SLPD need to find friends to obfuscate their queries, which complicates their query delivery process.
+As shown in Figure \ref{fig:AverageQuerySuccessRatio10}, we compare the average query success ratio of the four protocols for 5 different communication ranges (10, 30, 50, 70 and 90 meters) at 10 minutes mark. We observe that our ACP and BSW achieve high query success ratio, while the query success ratio in case of MHLPP and SLPD are lower than the other two. BSW has the highest query success ratio because it is a no-privacy protocol. The ACP has slightly lower query success ratio than BSW, because the query delivery process of the ACP is almost the same as that of BSW. Since users of ACP must wait for available ACs, it requires more time to initiate their queries. However, ACP and BSW exhibit similar performance compared to the other two protocols. MHLPP and SLPD need to find friends to obfuscate their queries, which complicates their query delivery process.
 
-\begin{figure} [H]
+\begin{figure} [htbp]
 \centering 
-\includegraphics[width=4.0in]{figures/F414AverageQuerySuccessRatio10minutes.png}
+\includegraphics[width=4.0in]{olgraph/QsrCr.png}
 \caption{Average Query Success Ratio (at 10 minutes mark)} 
 \label{fig:AverageQuerySuccessRatio10} %% label for entire figure 
 \end{figure}
@@ -27,14 +27,14 @@ The results at 20 minutes mark is shown in Figure \ref{fig:AverageQuerySuccessRa
 
 \begin{figure} [H]
 \centering 
-\includegraphics[width=4.0in]{figures/F415AverageQuerySuccessRatio20minutes.png}
+\includegraphics[width=4.0in]{olgraph/QsrCr20.png}
 \caption{Average Query Success Ratio (at 20 minutes mark)} 
 \label{fig:AverageQuerySuccessRatio20} %% label for entire figure 
 \end{figure}
 
 The communication range can influence the query success ratio. In most of the cases, the success ratio rises when we increase the communication range, and its influence is especially evident under 50 meters. A large communication range makes it easy for users to encounter others, which is good for them to forward queries. However, an user who is so far away from the destination does not want the intermediates of his query encounters many users nearby. Because all users who carry copies of that query are near the sender instead of the destination, which decreases their query success ratio. Therefore, when the communication range reaches 70 meters, the success ratios almost stay flat.
 
-In Figure \ref{fig:F416AverageQuerySuccessRatioWith50MetersCommunicationRatio}, we observe that both ACP and BSW have better convergence speed than MHLPP and SLPD. In other words, the former two protocols approach the 100\% query success ratio mark faster than the latter two. At the very beginning, the ACP even has a little higher query success ratio than BSW. Because the ACP users need ready appointment card, and most of the users get their first ready appointment cards at places where there are many users, users rarely generate query near the edges of the map at the beginning, which facilitates their queries delivery process. For example, if an user generates his query at the edge of the map, the copies of this query might be sent to users who are also at the edge, and it takes more time for them to deliver the query. If the user does not generate his query until he arrives at a place near the center, the copies of this query will be carried by the users in the center with higher probability.
+In Figure \ref{fig:F416AverageQuerySuccessRatioWith50MetersCommunicationRatio}, we observe that both ACP and BSW have better convergence speed than MHLPP and SLPD. In other words, the former two protocols approach the 100\% query success ratio mark faster than the latter two. At the very beginning, the ACP even has a little higher query success ratio than BSW. Because the ACP users need ready AC, and most of the users get their first \textit{ready}-ACs at places where there are many users, users rarely generate query near the edges of the map at the beginning, which facilitates their queries delivery process. For example, if an user generates his query at the edge of the map, the copies of this query might be sent to users who are also at the edge, and it takes more time for them to deliver the query. If the user does not generate his query until he arrives at a place near the center, the copies of this query will be carried by the users in the center with higher probability.
 
 \begin{figure} [hbtp]
 \centering 
@@ -58,7 +58,7 @@ In Figure \ref{fig:F417AverageReplySuccessRatioWith50MetersCommunicationRatio}, 
 
 \subsection{ Total Number of Query Relays}
 
-\noindent The query delivery process of all the four protocols use store and forward strategy, and the BSW makes copies for queries and gives half of the copies to any users it encounters. That is a significant cost for the network, so we use the number of query relays (QR) to evaluate that cost. The QR is initialized as zero at the beginning of the test. When an user relays one or several copies of a query, we increase QR by 1. For example, in SLPD, there are two phases: the obfuscation phase and the free phase. In the obfuscation phase, a query is forwarded among one-hop friends for $k$ times. After that, it is forwarded using the BSW protocol. The BSW protocol makes $c$ copies of the query and gives half of the copies to any encountering user. Thus, QR should be roughly $k+c$. Since the user gives all its copies to the destination at once if he encounters the destination, the QR may be smaller. The smaller that number is, the smaller the cost of the network is. Since there are 100 queries, we divide QR by 100 to get an average value. 
+\noindent The query delivery process of all the four protocols use store and forward strategy, and BSW makes copies for queries and gives half of the copies to any users it encounters. That is a significant cost for the network, so we use the number of query relays (QR) to evaluate that cost. The QR is initialized as zero at the beginning of the test. When an user relays one or several copies of a query, we increase QR by 1. For example, in SLPD, there are two phases: the obfuscation phase and the free phase. In the obfuscation phase, a query is forwarded among one-hop friends for $k$ times. After that, it is forwarded using BSW protocol. BSW makes $c$ copies of the query and gives half of the copies to any encountering user. Thus, QR should be roughly $k+c$. Since the user gives all its copies to the destination at once if he encounters the destination, the QR may be smaller. The smaller that number is, the smaller the cost of the network is. Since there are 100 queries, we divide QR by 100 to get an average value. 
 
 In Figure \ref{fig:F418AverageTotalNumberofForwardingQueriesAt20Minutes}, we compare QR in all four protocols. We observe that both BSW and ACP have slightly lower QR than the other two. In case of ACP and BSW, they deliver queries so fast that users who carry more than one copy give all their copies to the destination before they send these copies to different users separately. As a result, many copies have no chance to be forwarded, which decreases the cost. 
 
@@ -66,7 +66,7 @@ While both MHLPP and SLPD have obfuscation phases, the queries start to be deliv
 
 \begin{figure} [hbtp]
 \centering 
-\includegraphics[width=4.0in]{figures/F418AverageTotalNumberofForwardingQueriesAt20Minutes.png}
+\includegraphics[width=4.0in]{olgraph/QrCr.png}
 \caption{Average Number of Forwarding Queries At 20 Minutes Mark} 
 \label{fig:F418AverageTotalNumberofForwardingQueriesAt20Minutes} %% label for entire figure 
 \end{figure}
@@ -81,7 +81,7 @@ In Figure \ref{fig:F419AverageQueryBufferNeededAt20Minutes}, we compare the numb
 
 \begin{figure} [hbtp]
 \centering 
-\includegraphics[width=4.0in]{figures/F419AverageQueryBufferNeededAt20Minutes.png}
+\includegraphics[width=4.0in]{olgraph/QbnpuCr.png}
 \caption{Average Number of Query Buffer Needed at 20 Minutes Mark} 
 \label{fig:F419AverageQueryBufferNeededAt20Minutes} %% label for entire figure 
 \end{figure}
@@ -107,9 +107,9 @@ The Figure \ref{fig:F420AverageNumberofCarriedQueriesPerUser} shows the average 
 
 \subsection{ Distributing Appointment Cards}
 
-\noindent Exchanging appointment cards is a feature of proposed ACP, which can be considered as an extra cost. We count the number of exchanging ACs per minute to evaluate this extra cost of ACP.
+\noindent Exchanging ACs is a feature of proposed ACP, which can be considered as an extra cost. We count the number of exchanging ACs per minute to evaluate this extra cost of ACP.
 
-In Figure \ref{fig:F422AverageNumberofExchangingACsPerMinute}, we show the total number of exchanging ACs in the whole network. For example, if an user Alice encounters another user Bob, the total number of exchanging ACs processes increases by one when Alice exchanges any ACs to Bob. We count the number of those exchanging processes occur per minute. As shown in the figure, the exchanging processes do not occur frequently, but about 2 times per minutes. Since the size of an AC is small, it does not consume too much network resource. At the same time, users can get many appointment cards to help them send queries, as shown in Figure \ref{fig:F421AverageNumberofReadyACsPerUser}. The number of ready ACs per user is raising smoothly and steadily. 
+In Figure \ref{fig:F422AverageNumberofExchangingACsPerMinute}, we show the total number of exchanging ACs in the whole network. For example, if an user Alice encounters another user Bob, the total number of exchanging ACs processes increases by one when Alice exchanges any ACs to Bob. We count the number of those exchanging processes occur per minute. As shown in the figure \ref{fig:F422AverageNumberofExchangingACsPerMinute}, the exchanging processes do not occur frequently, but about 2 times per minutes. Since the size of an AC is small, it does not consume too much network resource. At the same time, users can get many ACs to help them send queries, as shown in Figure \ref{fig:F421AverageNumberofReadyACsPerUser}. The number of ready ACs per user is raising smoothly and steadily. 
 
 \begin{figure} [hbtp]
 \centering 
