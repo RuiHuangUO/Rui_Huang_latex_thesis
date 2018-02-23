@@ -9,7 +9,7 @@
 
 Since two friends could be a pair of multi-hop neighbors, users can leverage Optimized Link State Routing Protocol \cite{C29} to seek friends continuously after entering the network, so that they can recognize each other and make contact in time. When a user carries an obfuscation phase query, he might send the query to a multi-hop friend through several strangers. In this case, a secure communication is necessary for between them, so that they must send the query encrypted to prevent strangers from learning anything about the query. Each user obtains a pair of asymmetric keys (public and secret key) before he joins the network from a certificate authority using well-regarded techniques, like in \cite{C28}. Whenever a user detects a new friend, he sends a request to the friend asking for his public key. In this way, a user can get his friends' public key when they encounter each other. Even though several strangers can be active in the obfuscation phase, the queries can still be securely sent to the user's friend.
 
-The relationship strength is often ``a hidden effect of nodal profile similarities'' \cite{C30}. Let ${SV}_{i,j}$ denote a value of relationship strength which user $i$ determines whether user $j$ is an acceptable friend based on the relationship strength. For every pair of users ($i$ and $j$), we assume that there is an ${SV}_{i,j}$. If ${SV}_{i,j}$ is bigger than a specific friend threshold $T_{min}$, set by the original requester, user $j$ is considered as a friend of user $i$; otherwise, it will be treated as a stranger. The notations used in this paper and their meanings are shown in Table \ref{table:MhlppSymbols}. 
+The relationship strength is often ``a hidden effect of nodal profile similarities'' \cite{C30}. Let ${SV}_{i,j}$ denote a value of relationship strength which user $i$ determines whether user $j$ is an acceptable friend based on the relationship strength. For every pair of users ($i$ and $j$), we assume that there is an ${SV}_{i,j}$. If ${SV}_{i,j}$ is bigger than a specific friend threshold $T_{min}$, set by the original requester, user $j$ is considered as a friend of user $i$; otherwise, it will be treated as a stranger. The notations used in this chapter and their meanings are shown in Table \ref{table:MhlppSymbols}. 
 
 
 \begin{table}
@@ -35,6 +35,7 @@ Parameter & Meanings \\ \hline
 \textit{R${}_{s}$} & the external radius of the \textit{obfuscation area}  \\ \hline 
 \textit{T${}_{min}$} & the social value bound for friends \\ \hline 
 \textit{C${}_{max}$} & the extra path limit in each obfuscation forward \\ \hline 
+\textit{${SV}_{i,j}$} & the relationship strength between user $i$ and $j$ \\ \hline 
 \end{tabular}
 \end{table}
 
@@ -171,7 +172,7 @@ where $P_{r_pr_s}$ is the probability that ${N}_{0}$ is on the ring (i.e., the d
 
 \noindent In order to guarantee secure communications among friends, encryption is introduced in our protocol. In the obfuscation phase, the query is transmitted along friends, i.e., ${N}_{0}$, ${N}_{1}$, ${N}_{2}$, ..., ${N}_{f}$. When the query is sent from ${N}_{i}$ to ${N}_{i+1}$, a pair of encryption and decryption is needed, so the number of such pairs $T_{en}$ should be equal to $f$. 
 
-$T_{en}$ grows with both ${T}_{min}$ (threshold used to decide friend relationship) and inner radius ${R}_{p}$. Essentially, it is the number of friends participating in transmitting a query $q$ in its obfuscation phase that influences $T_{en}$. Given a smaller ${T}_{min}$, a user carrying the obfuscation phase query has more chances to encounter more friends in a certain area. A larger ${R}_{p}$ also leads to a bigger area inside the ring, so that there are more friends in this area. We evaluate the number of encryptions and decryptions in our simulation. Figure \ref{fig:NumOfEncWithInnerR} shows the average number of encryptions ($T_{en}$) with different friend thresholds ${T}_{min}$ and inner radius ${R}_{p}$. We observe that $T_{en}$ increases steadily as we increase ${T}_{min}$ and ${R}_{p}$.
+$T_{en}$ grows with both ${T}_{min}$ (threshold used to decide friend relationship) and inner radius ${R}_{p}$. Essentially, it is the number of friends participating in transmitting a query $q$ in its obfuscation phase that influences $T_{en}$. Given a smaller ${T}_{min}$, a user carrying the obfuscation phase query has more chances to encounter more friends in a certain area. A larger ${R}_{p}$ also leads to a bigger area inside the ring, so that there are more friends in this area. We evaluate the number of encryptions and decryptions in our simulation. Figure \ref{fig:NumOfEncWithInnerR} shows the average number of encryptions ($T_{en}$) with different friend thresholds ${T}_{min}$ and inner radius ${R}_{p}$. We observe that $T_{en}$ increases steadily as we increase ${T}_{min}$ (i.e., 85\%, 90\%, and 95\%) and ${R}_{p}$ (i.e., the horizontal axis).
 
 \begin{figure} [H]
   \centering 
