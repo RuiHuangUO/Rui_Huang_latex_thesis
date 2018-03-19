@@ -3,7 +3,7 @@
 \label{C_MHLPP}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{ System Model}
+\section{System Model}
 
 \noindent Our network architecture consists of two main entities: Users and LBS Providers (LBSPs). Due to the introduction of the social network, the users' social information can be used in obfuscation forwarding process. Based on available information in the social network, the relationship between two users can be considered as friends or strangers. The user who makes a query to an LBSP will be called the original requester while the others are called intermediate users. LBSPs are located in fixed locations and their coordinates are known by all users when users join the network. Attackers are assumed to be able to access LBSPs, and attempt to locate original requesters. We assume that the LBSPs are semi-trusted and the strangers are un-trusted. We also assume that both entities have sufficient resources, like computational capability, storage and battery power.
 
@@ -40,7 +40,7 @@ Parameter & Meanings \\ \hline
 \end{table}
 
 
-\section{ Details of MHLPP}
+\section{Details of MHLPP}
 
 \noindent MHLPP aims to protect the original requester's ($N_0$'s) location-privacy using an obfuscation path. In other words, a query $q$ which needs to be obfuscated must go through a series of friends after it leaves $N_0$. The whole process includes two parts: the obfuscation phase and the free phase. In the former phase, $q$ is only transmitted among friends, until it is sent to an area called ``\textit{obfuscation area}''. At the end of that phase the last friend $N_f$ replaces all $N_0$'s information by its own and forwards $q$ with an arbitrary DTN forwarding protocol, like the one suggested in \cite{C31}. In this case, what attackers can learn from the database in LBSP is $N_f$'s information, so they can hardly infer the original requester's identity and location based on that information. The free phase starts when the query $q$ is forwarded by $N_f$ and ends when it reaches the LBSP. 
 
@@ -113,7 +113,7 @@ When ${N}_{i}$ detects a new neighbor ${N}_{x}$ (one-hop or multi-hop neighbor),
 When we mention that ${N}_{i}$ switches a query $q$ to the free phase, ${N}_{i}$ actually replaces $N_0$'s information with its own one in $q$ to get ${q}^{*}$ and records this replacement in its storage, then ${N}_{i}$ uses the Spray and Wait protocol \cite{C31} to forward ${q}^{*}$ in plaintext. That allows ${N}_{i}$ to hide $N_0$'s identity and forward a reply from LBSP to $N_0$.
 
 
-\section{ Requirement parameters} \label{SecReqPara}
+\section{Requirement parameters} \label{SecReqPara}
 
 \noindent In the obfuscation phase, ${r}_{q}$ is always in $msg$ so that friends who get $msg$ can make decisions (e.g. selections of friends) based on it.
 
@@ -154,7 +154,7 @@ As shown in Figure \ref{fig:SelectionOfNxtFriend:b}, ${N}_{i}$ who is carrying o
 
 In conclusion, a query $q$ starts at the center and moves inside the ring, until it reaches the \textit{obfuscation area}. The point ${N}_{i}$ in Figure \ref{fig:SelectionOfNxtFriend:b} should be inside the ring, and the point ${N}_{d}$ might be anywhere. As a result, a user ${N}_{i}$ who is carrying an obfuscation query detects a friend continuously who has a larger distance from ${L}_{s}$ and inside an ellipse. If there is a friend like that, ${N}_{i}$ sends the query to that friend ${N}_{x}$.
 
-\section{ Privacy Analysis}
+\section{Privacy Analysis}
 
 \noindent We assume that attackers can achieve all information in LBSPs know. Obviously, they can know the identity of the last friend $N_f$ who replaces ${N}_{0}$'s information with his own. It is possible for the attackers to locate $N_f$ with little cost. For example, if ${N}_{0}$ stops moving after sending the query $q$, it is reasonable for $N_f$ to believe that ${N}_{0}$ is in a ring centered at the location of itself with radii ${R}_{p}$ and ${R}_{s}$. In other words, the distance between ${N}_{f}$ and ${N}_{0}$ should be in a range between ${R}_{p}$ and ${R}_{s}$. If attackers find all users who satisfy this condition, the original requester might be among these users with high probability. Then, a success ratio $P_{r_pr_s}$ to locate ${N}_{0}$ can be measured by a conditional probability
 \begin{equation} \label{GrindEQ__3_} 
@@ -168,7 +168,7 @@ P_{R_{p} R_{s} } =p_{_{R_{p} R_{s} } } \cdot \frac{1}{m_{_{R_{p} R_{s} } } }
 \end{equation} 
 where $P_{r_pr_s}$ is the probability that ${N}_{0}$ is on the ring (i.e., the distance between ${N}_{0}$ and ${N}_{f}$ is larger than ${R}_{p}$ and smaller than ${R}_{s}$). $m_{r_pr_s}$ is the number of users who are in the ring. Since parameters (e.g., ${R}_{p}$ and ${R}_{s}$) in ${r}_{q}$ are kept secret among trusted friends in our system model, attackers can hardly get the actual values of those parameters.
 
-\section{ Complexity discussion}
+\section{Complexity discussion}
 
 \noindent In order to guarantee secure communications among friends, encryption is introduced in our protocol. In the obfuscation phase, the query is transmitted along friends, i.e., ${N}_{0}$, ${N}_{1}$, ${N}_{2}$, ..., ${N}_{f}$. When the query is sent from ${N}_{i}$ to ${N}_{i+1}$, a pair of encryption and decryption is needed, so the number of such pairs $T_{en}$ should be equal to $f$. 
 
@@ -183,7 +183,7 @@ $T_{en}$ grows with both ${T}_{min}$ (threshold used to decide friend relationsh
 
 It is evident that encryption and decryption process in MHLPP results in an extra cost in both energy and computational resources. However, the number of encryptions and decryptions is quite low (below 3) which reasonable based on the experiment.
 
-\section{ Performance Analysis}
+\section{Performance Analysis}
 
 \noindent We use the map of Helsinki in our simulator to evaluate MHLPP. It is also compared against the known protocol, Hybrid and Social-aware Location-Privacy in Opportunistic mobile social networks (HSLPO). The simulation parameters are shown in Table \ref{table:MhlppExperimentParameters}. All pedestrians and cars are users in MHLPP. These users are moving on the map along streets continuously. There is an LBSP fixed at a random location on the map. For each user, we give him random social values between 0\% and 100\%, each corresponding to all other users. Each value has the same probability, so we can compute the expected number of friends of a user. For example, if we are given a privacy threshold (${T}_{min}$) of 85\%, then there might be 15\% (100\%-85\%) users who are friends of a certain user.
 
