@@ -2,7 +2,7 @@
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
-\chapter{ OMSN routing protocol simulator}
+\chapter{OMSN Routing Simulator (ORS)}
 \label{OPS}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -12,8 +12,26 @@ The ONE is an excellent simulator for DTN research, while it has its own weaknes
 
 In this chapter, we introduce two major algorithms used in our new ORS simulator. The vertex reduce algorithm is used for simplifying the input of the all-pair shortest path algorithm, so that the simulator can initialize quickly. The finding nodes algorithm is used to find users which are in the communication radius of a given user.
 
+\section{Overview}
+At its core, ORS is a discrete event simulation engine. To simulate an OMSN, hosts can move in the simulator, and information of social network is also included in the simulator. The simulator reads real-world maps, which enables hosts to walk along streets on the maps. The default movement model of hosts is Working day movement model \cite{C32} where hosts walk through the shortest path between several random points. Researchers can replace the movement model with other models by implementing models in the source codes.
 
-\section{ Vertex Reduction Algorithm}
+The main function of ORS can be considered as the movement of hosts and message routing. The movement routes of hosts is generated based on the movement model and are defined by a series of segment lines before the simulation starts. In other words, the routes are fixed before hosts start to walk so that the locations of hosts is a function of time. Since ORS can get the locations of hosts directly when given a specific time value, it only calculate locations of hosts when some hosts send messages or UI needs the locations of hosts. Each host has a communication range which is a circle. ORS calculates the locations of hosts when one or more hosts send messages, and the hosts inside the communication range must receive the sent messages. The messages are always broadcast, and ORS copies them to all hosts inside the communication range of the host who sends the message. Therefore, the host itself decides whether a received message should be received or not, which enables the hosts to control as many details as possible. The message structures are defined by the implementation of DTN routing protocols and do not have mandatory entries except a unique ID assigned by the simulator which is used for identifying messages. 
+
+The UI of ORS is shown in Figure \ref{fig:SimulatorUI}. The parameters of the simulator which include the file path of the map file, the number of hosts, the communication range and so on are defined in a ``txt'' file. When we use ORS open the ``txt'' file (e.g., ``aenv1.txt''), ORS reads all parameters in the file and initialize the simulator. First, the simulator draws the map and uses yellow lines to denotes the streets; second, ORS generates hosts, their relationship strength, and their movement routes; third, ORS initializes instances of a specific routing protocol for each host. ORS starts the experiment automatically when the initializations finish. Users can define the values of the textboxes on the UI in source codes so that they can debug their protocols.
+
+\begin{figure} [hbtp]
+  \centering 
+  \includegraphics[height=4in]{figures/simulator.png}
+  \caption{Simulator UI} 
+  \label{fig:SimulatorUI} %% label for entire figure 
+\end{figure}
+
+The hosts in the simulator can be viewed as mobile devices (e.g., smartphones) which are a leak of software. These devices are carried by people who are moving in the simulator. ORS offers the devices interfaces so that users can implement routing protocols which is the software of the mobile devices. The interfaces which devices can get from ORS includes setting timers, current time, the identities of their owners, sending messages to surroundings and so on. Comparing to ONE, the interfaces of ORS are more flexible so that developers can almost define everything when they implement their routing protocols, like the size of buffers or the frequency of sending hello messages. ORS leaves the implementation of persistent storage, energy consumption and message routing to routing protocols instead of giving interfaces of these features, which enables researchers to make their experiments more accurate. For example, the sizes of the messages are different. the hello messages are small while general messages are large. Also, different operations cost different energy. Therefore, it is good for developers to define these features by them self. ORS can track all messages if developers implement the method by which ORS can identify messages. In this way, researchers can learn the location of each message, the number of the message which is delivered to the destination, and the state of each message (e.g., shipping or delivered).
+
+The relationship strengths of each pair of hosts are defined when ORS initials hosts. The relationship strengths are fixed during the experiment. All relationship strengths are recorded in a table so that routing protocols can get the relationship between any pair of hosts when the protocols learn their identities. In general case, the routing protocols can learn the identity of their owners and the identity of the senders of messages, so that routing protocols can get the relationship strengths between the senders and their owners.
+
+
+\section{Vertex Reduction Algorithm}
 
 \noindent Movement of network nodes is a significant factor in the performance of DTNs. To evaluate the performance of different DTN protocols, researchers have presented different kinds of movement models, like in \cite{C32}. Since shortest path algorithm is an essential and time-cost part of creating many movement models, it is an important aspect to optimize the time-cost for simulators, calculating the all-pairs shortest paths in the entire map.
 
